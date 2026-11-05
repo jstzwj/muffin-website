@@ -1,6 +1,6 @@
 # Muffin Website
 
-[Muffin](https://github.com/jstzwj/Muffin) Markdown 编辑器的项目主页，面向 Cloudflare Pages 部署。
+[Muffin](https://github.com/jstzwj/Muffin) Markdown 编辑器的项目主页，通过 Cloudflare Workers Static Assets 托管静态文件。
 
 原生 HTML / CSS / TypeScript，使用 Vite 构建。无服务端、数据库或登录功能。默认简体中文，可切换 English；语言偏好仅保存在当前浏览器。
 
@@ -20,22 +20,29 @@ npm run build   # TypeScript 检查并构建到 dist/
 npm run preview # 预览生产构建
 ```
 
-## Cloudflare Pages
+## Cloudflare 部署
 
-在 Cloudflare 控制台创建或打开 Pages 项目，连接 `jstzwj/muffin-website`：
+当前控制台使用 **Workers Builds**（包含“构建命令”“部署命令”和“构建令牌”），连接 `jstzwj/muffin-website`。仓库的 `wrangler.jsonc` 通过 `assets.directory` 指向 `dist`，无需 Worker 入口脚本。
 
-| 设置         | 值                               |
-| ------------ | -------------------------------- |
-| 生产分支     | `main`                           |
-| 框架预设     | Vite（或 None）                  |
-| 根目录       | 仓库根目录                       |
-| 构建命令     | `npm run build`                  |
-| 构建输出目录 | `dist`                           |
-| Node.js      | 22.12+；仓库包含 `.node-version` |
+| 设置     | 值                                           |
+| -------- | -------------------------------------------- |
+| 项目名称 | `muffin-website`，与 Wrangler 的 `name` 一致 |
+| 生产分支 | `main`                                       |
+| 根目录   | `/`（仓库根目录）                            |
+| 构建命令 | `npm run build`                              |
+| 部署命令 | `npx wrangler deploy`（或 `npm run deploy`） |
+| 静态目录 | `dist`，由 `wrangler.jsonc` 声明             |
+| Node.js  | 22.12+；仓库包含 `.node-version`             |
 
-`wrangler.jsonc` 也声明了 Pages 输出目录。无需 API 密钥或其他环境变量。连接 Git 集成后，后续推送到 `main` 会由 Cloudflare 构建部署。本仓库的 GitHub Actions 负责构建与浏览器检查，不负责创建 Cloudflare 项目。
+Workers Builds 使用控制台已选定的构建令牌，无需在仓库写入 API 密钥。Wrangler 版本由 `package.json` 和锁文件固定，避免部署时临时下载不同版本。连接 Git 集成后，推送到 `main` 会触发 Cloudflare 构建部署。
 
-`public/_headers` 包含 Cloudflare Pages 使用的 CSP 等响应头。开发服务器不会自动应用这些响应头；浏览器测试会加载同一份 CSP 进行验证。
+本地可在构建后执行 `npm run deploy:check`，仅校验并打包，不上传。执行 `npm run deploy` 才会发布，需要先通过 `npx wrangler login` 登录或配置部署凭证。GitHub Actions 执行构建、部署预检与浏览器检查，不负责创建或发布 Cloudflare 项目。
+
+如果日志出现 “run wrangler deploy on a Pages project” 和 “Missing entry-point”，检查配置是否仍使用 `pages_build_output_dir`：该字段属于 Pages，不能交给 Workers 的 `wrangler deploy`。当前配置已改为 Workers 静态资源格式，控制台可保留现有部署命令。重试时应使用包含此修复的最新 `main` 提交。
+
+如需专门使用 **Cloudflare Pages**，应在控制台选择 Pages 的 Git 集成，构建命令为 `npm run build`，输出目录为 `dist`；相应将 Wrangler 配置改回 `pages_build_output_dir`，命令行上传使用 `wrangler pages deploy`。这与当前 Workers Builds 是两条部署流程，不能混用。
+
+`public/_headers` 包含 Cloudflare 静态资源使用的 CSP 等响应头。开发服务器不会自动应用这些响应头；浏览器测试会加载同一份 CSP 进行验证。
 
 绑定最终域名后，请把 `index.html` 中 `og:image` 的相对路径改为该域名下的绝对 URL，并补充 `og:url`、canonical 与 sitemap。当前没有假设尚未确认的部署域名。
 
@@ -71,6 +78,7 @@ npm run preview # 预览生产构建
 ```sh
 npx playwright install chromium
 npm run build
+npm run deploy:check
 npm test
 npm run format:check
 ```
