@@ -1,0 +1,326 @@
+/* Page feature visuals. The application window lives in muffin-window.css. */
+.performance {
+  padding-top: 120px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 72px;
+  align-items: center;
+}
+.eyebrow {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  margin-bottom: 20px;
+}
+.performance-heading h2 {
+  font-size: 30px;
+  line-height: 1.55;
+}
+.performance-heading > p {
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.9;
+}
+.performance-heading .text-link {
+  margin-top: 24px;
+}
+.benchmark-visual {
+  border-radius: 14px;
+  padding: 30px 32px;
+  background: #f1f5f2;
+  color: #30483b;
+}
+.benchmark-file {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  font: 12px/1.6 var(--font-mono);
+}
+.benchmark-file small {
+  display: block;
+  font-size: 10px;
+  color: #5b7163;
+}
+.benchmark-size {
+  margin-top: 14px;
+  font: 400 112px/1.15 var(--font-text);
+  letter-spacing: -0.065em;
+}
+.benchmark-size > span {
+  font-size: 50px;
+  letter-spacing: -0.04em;
+}
+.benchmark-lines {
+  margin-top: 14px;
+  font: 10px/1.8 var(--font-mono);
+  color: #5b7163;
+}
+.benchmark-lines > span {
+  display: block;
+}
+.benchmark-formats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 16px;
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid #dbe4dd;
+  font-size: 10px;
+  color: #5b7163;
+}
+.performance-note {
+  grid-column: 1 / -1;
+  margin-top: 24px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+  text-align: right;
+}
+.native-benefits {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 42px;
+  margin-top: 64px;
+  padding-top: 36px;
+  border-top: 1px solid var(--line);
+}
+.benefit-symbol {
+  display: block;
+  margin-bottom: 18px;
+  color: #4e6e5b;
+  font: 500 17px/1.6 var(--font-mono);
+}
+.native-benefits h3 {
+  font-size: 17px;
+}
+.native-benefits p {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+.technical-document {
+  padding: 23px 22px 18px;
+  border-radius: 6px;
+  background: white;
+  color: #292d32;
+}
+.technical-document h3 {
+  font:
+    600 15px/1.5 -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eceeed;
+  letter-spacing: -0.02em;
+}
+.workflow-diagram {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 15px 0 19px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.technical-equation {
+  display: flex;
+  justify-content: center;
+  padding: 22px 0 4px;
+  font-size: 25px;
+}
+.detail-image {
+  color: #333d38;
+  min-width: 0;
+}
+.fragment-table {
+  background: #fff;
+  font:
+    11px/1.5 -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+.fragment-table th,
+.fragment-table td {
+  padding: 6px 7px;
+}
+.fragment-table .active-cell {
+  outline: 1.5px solid #6c957d;
+  outline-offset: -1px;
+  background: #f0f6f1;
+}
+.fragment-code {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 8px;
+  font-size: 10px;
+  line-height: 1.95;
+  background: #fff;
+}
+.detail-image--formula {
+  font-size: 27px;
+}
+.fragment-night {
+  width: 100%;
+  padding: 16px 12px;
+  border-radius: 5px;
+  color: #dde5e3;
+  background: #30373a;
+  box-shadow: 0 4px 12px #1b26331a;
+  font:
+    10px/1.7 -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+.fragment-night h4 {
+  margin: 0 0 5px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+.fragment-night p {
+  margin: 0 0 14px;
+  font-size: 9px;
+  color: #b8c6bf;
+}
+.night-task {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 7px;
+  font-size: 9px;
+}
+.night-task::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border: 1px solid #81978b;
+  border-radius: 2px;
+  flex: none;
+}
+.night-task.is-done::before {
+  content: "✓";
+  background: #a3bfae;
+  color: #22362b;
+  font-size: 8px;
+  line-height: 8px;
+  text-align: center;
+}
+
+@media (max-width: 1023px) {
+  .performance {
+    gap: 0 36px;
+  }
+  .performance-heading h2 {
+    font-size: 27px;
+  }
+  .benchmark-visual {
+    padding: 26px;
+  }
+  .benchmark-size {
+    font-size: 92px;
+  }
+  .native-benefits {
+    gap: 26px;
+  }
+  .fragment-table {
+    font-size: 12px;
+  }
+  .fragment-code {
+    padding: 15px 18px;
+    font-size: 11px;
+  }
+  .fragment-night {
+    padding: 19px;
+  }
+  .fragment-night h4 {
+    font-size: 15px;
+  }
+  .fragment-night p,
+  .night-task {
+    font-size: 11px;
+  }
+}
+@media (max-width: 639px) {
+  .performance {
+    padding-top: 76px;
+    grid-template-columns: 1fr;
+  }
+  .performance-heading h2 {
+    font-size: 27px;
+  }
+  .performance-heading > p {
+    font-size: 15px;
+  }
+  .benchmark-visual {
+    margin-top: 32px;
+    padding: 27px;
+  }
+  .benchmark-size {
+    font-size: 100px;
+  }
+  .performance-note {
+    margin-top: 17px;
+    text-align: left;
+  }
+  .native-benefits {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-top: 36px;
+    padding-top: 30px;
+  }
+  .benefit-symbol {
+    margin-bottom: 8px;
+  }
+  .native-benefits p {
+    margin-top: 7px;
+  }
+  .technical-document {
+    padding: 16px 12px;
+  }
+  .technical-document h3 {
+    font-size: 13px;
+  }
+  .technical-equation {
+    font-size: 23px;
+  }
+  .detail-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .detail-image {
+    aspect-ratio: 1.8;
+    padding: 24px;
+  }
+  .fragment-table {
+    font-size: 12px;
+  }
+  .fragment-table th,
+  .fragment-table td {
+    padding: 7px 10px;
+  }
+  .fragment-code {
+    padding: 13px 16px;
+    font-size: 12px;
+  }
+  .detail-image--formula {
+    font-size: 32px;
+  }
+  .fragment-night {
+    padding: 18px;
+  }
+  .fragment-night h4 {
+    font-size: 16px;
+  }
+  .fragment-night p,
+  .night-task {
+    font-size: 11px;
+  }
+  .night-task {
+    gap: 8px;
+  }
+}

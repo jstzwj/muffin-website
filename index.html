@@ -1,11 +1,5 @@
 <!doctype html>
-<html
-  lang="zh-CN"
-  data-type="software"
-  data-radius="soft"
-  data-buttons="tonal"
-  data-motion
->
+<html lang="zh-CN" data-type="software" data-motion>
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -14,7 +8,7 @@
     />
     <meta name="page-type" content="software" />
     <meta name="site-kind" content="software" />
-    <meta name="theme-color" content="#dfdedb" />
+    <meta name="theme-color" content="#ffffff" />
     <meta
       name="description"
       content="Muffin 是免费开源的原生 Markdown 编辑器，以 C++ 和 Qt 6 构建。支持所见即所得编辑、源码模式、LaTeX 与 Mermaid，适用于 Windows、macOS 和 Linux。"
@@ -36,429 +30,1188 @@
       type="font/ttf"
       crossorigin
     />
-    <link rel="stylesheet" href="/assets/system.css" />
     <link rel="stylesheet" href="/assets/motion/motion.css" />
-    <link rel="stylesheet" href="/assets/layout/layout.css" />
     <title>Muffin — 原生桌面 Markdown 编辑器</title>
   </head>
   <body>
-    <!-- Software. Taste Skill: stone-blueprint / familjen / centred / nav-mega / footer-dark / close-type / surface-pairs / tonal. Actual Muffin captures; no stock assets. -->
-    <header class="nav">
-      <div class="wrap nav__bar">
-        <a class="skip" href="#top" data-i18n="skip">跳到正文</a>
-        <a class="nav__logo" href="#top"
-          ><img src="/muffin.svg" alt="" width="34" height="34" /><span
-            >Muffin</span
-          ></a
+    <!-- The user's reference takes precedence over the previous dealt, full-screen layout.
+         Original Muffin identity; HTML/CSS macOS-style product reconstruction, sage stage,
+         English sample, measured large-file evidence and the original Taste motion layer. -->
+    <a class="skip" href="#top" data-i18n="skip">跳到正文</a>
+    <header class="site-header wrap">
+      <a class="brand" href="#top"
+        ><img src="/muffin.svg" alt="" width="28" height="28" /><span
+          >Muffin</span
+        ></a
+      >
+      <nav aria-label="主导航" data-label="navigation">
+        <a class="header-section-link" href="#features" data-i18n="navFeatures"
+          >功能</a
         >
-        <nav class="nav__links" aria-label="主导航" data-label="navigation">
-          <div class="nav__item">
-            <a class="nav__link" href="#editor" data-i18n="navEditor">编辑器</a>
-            <div class="nav__menu">
-              <div class="wrap grid">
-                <div class="menu-col span-4">
-                  <p class="t-label" data-i18n="menuEditing">编辑文档</p>
-                  <a href="#editor"
-                    ><span data-i18n="menuViews">编辑视图与源码</span></a
-                  >
-                </div>
-                <div class="menu-col span-4">
-                  <p class="t-label" data-i18n="menuContents">文档内容</p>
-                  <a href="#features"
-                    ><span data-i18n="menuBlocks">代码、图表与公式</span></a
-                  >
-                </div>
-                <div class="menu-col span-4">
-                  <p class="t-label" data-i18n="menuFiles">文件与导出</p>
-                  <a href="#questions"
-                    ><span data-i18n="menuFormats">Markdown 与其他格式</span></a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="nav__item">
-            <a class="nav__link" href="#features" data-i18n="navFeatures"
-              >功能</a
-            >
-          </div>
-          <div class="nav__item">
-            <a class="nav__link" href="#questions" data-i18n="navQuestions"
-              >常见问题</a
-            >
-          </div>
-          <div class="nav__item">
-            <a class="nav__link" href="https://github.com/jstzwj/Muffin"
-              >GitHub ↗</a
-            >
-          </div>
-        </nav>
-        <div class="nav__actions">
-          <button
-            id="language-toggle"
-            class="language-toggle"
-            type="button"
-            aria-label="Switch to English"
-          >
-            <span>EN</span></button
-          ><a class="btn btn--primary" href="#download" data-i18n="download"
-            >下载 Muffin</a
-          >
-        </div>
+        <a
+          class="header-section-link"
+          href="#questions"
+          data-i18n="navQuestions"
+          >常见问题</a
+        >
+        <a href="https://github.com/jstzwj/Muffin"
+          >GitHub <span aria-hidden="true">↗</span></a
+        >
         <button
-          class="nav__toggle"
+          id="language-toggle"
           type="button"
-          aria-expanded="false"
-          aria-label="菜单"
-          data-label="menu"
+          aria-label="Switch to English"
         >
-          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
-            <path
-              d="M2 5h14M2 13h14"
-              stroke="currentColor"
-              stroke-width="1.6"
-            />
-          </svg>
+          <span>EN</span>
         </button>
-      </div>
+      </nav>
     </header>
     <main id="top">
-      <section class="hero hero--centred" aria-labelledby="hero-title">
-        <div class="wrap">
-          <div class="hero-text">
-            <div class="hero__c">
-              <p class="hero-notice" data-i18n="heroNotice">
-                Muffin · Windows / macOS / Linux
-              </p>
-              <h1 id="hero-title" data-i18n="heroTitle">
-                原生桌面<br />Markdown 编辑器。
-              </h1>
-              <p class="hero__lead" data-i18n="heroLead">
-                用 C++ 和 Qt 6 构建。直接编辑排版后的文档，<br
-                  class="desktop-break"
-                />随时切回源码，保存为普通的 .md 文件。
-              </p>
-              <div class="btn-row">
-                <a
-                  class="btn btn--primary"
-                  href="#download"
-                  data-i18n="download"
-                  >下载 Muffin</a
-                ><a
-                  class="link"
-                  href="https://github.com/jstzwj/Muffin"
-                  data-i18n="source"
-                  >查看源码</a
+      <section class="intro" aria-labelledby="hero-title">
+        <div class="intro-copy">
+          <img
+            class="app-icon"
+            src="/muffin.svg"
+            alt=""
+            width="88"
+            height="88"
+            fetchpriority="high"
+          />
+          <h1 id="hero-title">Muffin</h1>
+          <p class="intro-category" data-i18n="heroCategory">
+            原生桌面 Markdown 编辑器。
+          </p>
+          <p class="intro-description" data-i18n="heroLead">
+            从几页笔记，到 1 GiB 的 Markdown。<br class="desktop-break" />原生
+            C++ / Qt 6，直接在排版后的页面上写。
+          </p>
+          <div class="intro-actions">
+            <div class="download-control">
+              <a class="btn btn--primary" href="#download" data-i18n="download"
+                >下载 Muffin</a
+              >
+              <details class="download-picker">
+                <summary aria-label="选择下载版本" data-label="downloadMenu">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="m4 5.5 3 3 3-3"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </summary>
+                <div class="download-menu">
+                  <a
+                    href="https://github.com/jstzwj/Muffin/releases/latest"
+                    data-download="windows"
+                    ><span>Windows</span
+                    ><small
+                      ><span data-windows-architecture>x64</span> · MSI
+                      <span aria-hidden="true">↗</span></small
+                    ></a
+                  >
+                  <a
+                    href="https://github.com/jstzwj/Muffin/releases/latest"
+                    data-download="macos"
+                    ><span>macOS</span
+                    ><small
+                      >Apple Silicon · DMG
+                      <span aria-hidden="true">↗</span></small
+                    ></a
+                  >
+                  <a
+                    href="https://github.com/jstzwj/Muffin/releases/latest"
+                    data-download="linux"
+                    ><span>Linux</span
+                    ><small
+                      >x64 · tar.gz <span aria-hidden="true">↗</span></small
+                    ></a
+                  >
+                </div>
+              </details>
+            </div>
+            <a
+              class="btn btn--secondary"
+              href="https://github.com/jstzwj/Muffin/blob/main/README.zh.md"
+              data-documentation
+              ><span data-i18n="documentation">使用说明</span
+              ><span aria-hidden="true">↗</span></a
+            >
+          </div>
+        </div>
+        <div
+          id="editor"
+          class="showcase wide-width"
+          aria-label="Muffin 编辑器界面"
+          data-label="editor"
+        >
+          <div
+            id="editor-screen"
+            class="app-frame muffin-window"
+            data-visual
+            data-view="render"
+            lang="en"
+          >
+            <div class="window-titlebar">
+              <span class="window-lights" aria-hidden="true"
+                ><i></i><i></i><i></i
+              ></span>
+              <span class="window-title">README.md — Muffin</span>
+            </div>
+            <svg
+              class="window-icon-definitions"
+              width="0"
+              height="0"
+              aria-hidden="true"
+            >
+              <defs>
+                <symbol id="demo-folder" viewBox="0 0 16 16">
+                  <path
+                    d="M1 4a1 1 0 0 1 1-1h4l2 2h6a1 1 0 0 1 1 1v7H1Z"
+                    fill="#ffca45"
+                  />
+                  <path d="M1 7h14v6H1Z" fill="#f5b51b" />
+                </symbol>
+                <symbol id="demo-file" viewBox="0 0 16 16">
+                  <path
+                    d="M3 1.5h6l4 4v9H3Z"
+                    fill="none"
+                    stroke="currentColor"
+                  />
+                  <path
+                    d="M9 1.5v4h4M5 8h6M5 10h6M5 12h4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width=".8"
+                  />
+                </symbol>
+                <symbol id="demo-new-file" viewBox="0 0 16 16">
+                  <path
+                    d="M3 1h6l4 4v4M3 1v14h5M9 1v4h4M12 10v6M9 13h6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linejoin="round"
+                  />
+                </symbol>
+                <symbol id="demo-new-folder" viewBox="0 0 16 16">
+                  <path
+                    d="M1 4h5l2 2h7v6h-3M1 4v9h6M11 9v6M8 12h6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linejoin="round"
+                  />
+                </symbol>
+                <symbol id="demo-refresh" viewBox="0 0 16 16">
+                  <path
+                    d="M13 5a5.5 5.5 0 1 0 .5 5M13 1v4H9"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </symbol>
+                <symbol id="demo-sort" viewBox="0 0 16 16">
+                  <path
+                    d="M1 3h7M1 7h5M1 11h3M12 2v12l-3-3M12 14l3-3"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linejoin="round"
+                  />
+                </symbol>
+                <symbol id="demo-collapse" viewBox="0 0 16 16">
+                  <path
+                    d="M5 1h9v10M2 4h10v10H2ZM5 9h4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linejoin="round"
+                  />
+                </symbol>
+                <symbol id="demo-search" viewBox="0 0 16 16">
+                  <circle
+                    cx="6.5"
+                    cy="6.5"
+                    r="4.5"
+                    fill="none"
+                    stroke="currentColor"
+                  />
+                  <path d="m10 10 4.5 4.5" stroke="currentColor" />
+                </symbol>
+                <symbol id="demo-pin" viewBox="0 0 16 16">
+                  <path
+                    d="M5 1h6L9.5 5v3l2 2h-7l2-2V5ZM8 10v5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linejoin="round"
+                  />
+                </symbol>
+                <symbol id="demo-sidebar" viewBox="0 0 16 16">
+                  <circle
+                    cx="8"
+                    cy="8"
+                    r="5.5"
+                    fill="none"
+                    stroke="currentColor"
+                  />
+                  <circle cx="8" cy="8" r="1.8" fill="currentColor" />
+                </symbol>
+                <symbol id="demo-source-icon" viewBox="0 0 16 16">
+                  <path
+                    d="m5 4-4 4 4 4M11 4l4 4-4 4M9 2 7 14"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </symbol>
+                <symbol id="demo-split" viewBox="0 0 16 16">
+                  <rect
+                    x="1.5"
+                    y="2.5"
+                    width="13"
+                    height="11"
+                    rx="2"
+                    fill="none"
+                    stroke="currentColor"
+                  />
+                  <path d="M7 3v10" stroke="currentColor" />
+                </symbol>
+                <symbol id="demo-lock" viewBox="0 0 16 16">
+                  <g fill="none" stroke="currentColor" stroke-width="1.1">
+                    <rect x="3.5" y="7" width="9" height="7" rx="1" />
+                    <path d="M5.5 7V4a2.5 2.5 0 0 1 5 0v3M8 10v2" />
+                  </g>
+                </symbol>
+                <symbol id="demo-link" viewBox="0 0 16 16">
+                  <g
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.2"
+                    stroke-linecap="round"
+                  >
+                    <path
+                      d="m6 6 3-3a3 3 0 0 1 4 4l-3 3M10 10l-3 3a3 3 0 0 1-4-4l3-3M5.5 10.5l5-5"
+                    />
+                  </g>
+                </symbol>
+              </defs>
+            </svg>
+            <div class="window-menubar" aria-label="Application menu preview">
+              <span>File</span><span>Edit</span><span>Paragraph</span
+              ><span>Insert</span><span>Format</span><span>View</span
+              ><span>Themes</span><span>Help</span>
+            </div>
+            <div class="window-workspace">
+              <aside class="window-sidebar" aria-label="Muffin sidebar">
+                <div
+                  class="sidebar-tabs"
+                  role="tablist"
+                  aria-label="Sidebar panels"
                 >
+                  <button
+                    type="button"
+                    role="tab"
+                    id="demo-files-tab"
+                    aria-controls="demo-files"
+                    aria-selected="true"
+                    data-sidebar="files"
+                  >
+                    Files
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    id="demo-outline-tab"
+                    aria-controls="demo-outline"
+                    aria-selected="false"
+                    tabindex="-1"
+                    data-sidebar="outline"
+                  >
+                    Outline
+                  </button>
+                </div>
+                <div class="sidebar-toolbar" aria-hidden="true">
+                  <svg class="sidebar-pin"><use href="#demo-pin" /></svg
+                  ><span></span><svg><use href="#demo-new-file" /></svg
+                  ><svg><use href="#demo-new-folder" /></svg
+                  ><svg><use href="#demo-refresh" /></svg
+                  ><svg><use href="#demo-sort" /></svg
+                  ><svg><use href="#demo-collapse" /></svg
+                  ><svg><use href="#demo-search" /></svg>
+                </div>
+                <div
+                  class="sidebar-panel"
+                  id="demo-files"
+                  role="tabpanel"
+                  aria-labelledby="demo-files-tab"
+                >
+                  <ul class="file-tree" aria-label="Muffin project files">
+                    <li class="tree-folder">
+                      <span class="tree-chevron">›</span
+                      ><svg><use href="#demo-folder" /></svg
+                      ><span>.github</span>
+                    </li>
+                    <li class="tree-folder">
+                      <span class="tree-chevron">›</span
+                      ><svg><use href="#demo-folder" /></svg><span>build</span>
+                    </li>
+                    <li class="tree-folder">
+                      <span class="tree-chevron">›</span
+                      ><svg><use href="#demo-folder" /></svg><span>cmake</span>
+                    </li>
+                    <li class="tree-folder">
+                      <span class="tree-chevron">›</span
+                      ><svg><use href="#demo-folder" /></svg><span>docs</span>
+                    </li>
+                    <li class="tree-folder">
+                      <span class="tree-chevron">›</span
+                      ><svg><use href="#demo-folder" /></svg
+                      ><span>installer</span>
+                    </li>
+                    <li class="tree-folder">
+                      <span class="tree-chevron">›</span
+                      ><svg><use href="#demo-folder" /></svg
+                      ><span>resources</span>
+                    </li>
+                    <li class="tree-folder">
+                      <span class="tree-chevron">›</span
+                      ><svg><use href="#demo-folder" /></svg
+                      ><span>scripts</span>
+                    </li>
+                    <li class="tree-folder">
+                      <span class="tree-chevron">›</span
+                      ><svg><use href="#demo-folder" /></svg><span>src</span>
+                    </li>
+                    <li class="tree-folder">
+                      <span class="tree-chevron">›</span
+                      ><svg><use href="#demo-folder" /></svg><span>tests</span>
+                    </li>
+                    <li class="tree-folder">
+                      <span class="tree-chevron">›</span
+                      ><svg><use href="#demo-folder" /></svg
+                      ><span>third_party</span>
+                    </li>
+                    <li class="tree-folder">
+                      <span class="tree-chevron">›</span
+                      ><svg><use href="#demo-folder" /></svg
+                      ><span>translations</span>
+                    </li>
+                    <li>
+                      <svg><use href="#demo-file" /></svg
+                      ><span>.clang-format</span>
+                    </li>
+                    <li>
+                      <svg><use href="#demo-file" /></svg
+                      ><span>CMakeLists.txt</span>
+                    </li>
+                    <li>
+                      <svg><use href="#demo-file" /></svg
+                      ><span>CMakePresets.json</span>
+                    </li>
+                    <li>
+                      <svg><use href="#demo-file" /></svg
+                      ><span>conanfile.py</span>
+                    </li>
+                    <li>
+                      <svg><use href="#demo-file" /></svg><span>LICENSE</span>
+                    </li>
+                    <li class="tree-active">
+                      <svg><use href="#demo-file" /></svg><span>README.md</span>
+                    </li>
+                    <li>
+                      <svg><use href="#demo-file" /></svg
+                      ><span>README.zh.md</span>
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  class="sidebar-panel"
+                  id="demo-outline"
+                  role="tabpanel"
+                  aria-labelledby="demo-outline-tab"
+                  hidden
+                >
+                  <button
+                    class="outline-entry outline-root"
+                    type="button"
+                    data-document-heading="readme-title"
+                  >
+                    Muffin
+                  </button>
+                  <button
+                    class="outline-entry"
+                    type="button"
+                    data-document-heading="readme-editor"
+                  >
+                    Editor
+                  </button>
+                  <button
+                    class="outline-entry"
+                    type="button"
+                    data-document-heading="readme-build"
+                  >
+                    Build
+                  </button>
+                  <button
+                    class="outline-entry"
+                    type="button"
+                    data-document-heading="readme-workflow"
+                  >
+                    Release workflow
+                  </button>
+                  <button
+                    class="outline-entry"
+                    type="button"
+                    data-document-heading="readme-equations"
+                  >
+                    Equations
+                  </button>
+                </div>
+              </aside>
+              <div class="window-editor">
+                <section
+                  class="editor-pane source-pane"
+                  hidden
+                  aria-label="Markdown source pane"
+                >
+                  <div class="pane-header" hidden>
+                    <svg aria-hidden="true">
+                      <use href="#demo-source-icon" />
+                    </svg>
+                    <span>Markdown source</span>
+                  </div>
+                  <div
+                    class="source-viewport"
+                    id="demo-source"
+                    tabindex="0"
+                    aria-label="English Markdown source"
+                  >
+                    <pre class="demo-source"><code>&lt;div align="center"&gt;
+
+&lt;img src="logo.svg" alt="Muffin" width="220"&gt;
+
+# Muffin
+
+**A native, lightweight, WYSIWYG Markdown editor.**
+
+Muffin is a block-level WYSIWYG Markdown editor built from the ground up in C++ and Qt 6. Your Markdown file stays the single source of truth, rendered as a page you edit directly: no split panes, no preview pane, no typing lag.
+
+[Download](#download) · [Features](#features) · [Build from source](#development) · [Architecture](#architecture)
+
+![C++](https://img.shields.io/badge/C%2B%2B-20-00599C?logo=c%2B%2B&amp;logoColor=white)
+![Qt](https://img.shields.io/badge/Qt-6-41CD52?logo=qt&amp;logoColor=white)
+![Platforms](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-2ea44f)
+![UI languages](https://img.shields.io/badge/UI_languages-15-blueviolet)
+[![Releases](https://img.shields.io/badge/releases-GitHub-181717?logo=github)](https://github.com/jstzwj/Muffin/releases)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+
+Other languages: [简体中文](https://github.com/jstzwj/Muffin/blob/main/README.zh.md)
+
+&lt;/div&gt;
+
+## Editor
+
+Edit the document directly, or switch to its Markdown source.
+
+| Content          | Support             |
+| ---------------- | ------------------- |
+| Tables and tasks | Direct editing      |
+| Code blocks      | Syntax highlighting |
+| Equations        | LaTeX               |
+| Diagrams         | Mermaid             |
+
+## Build
+
+```cpp
+// A small beginning.
+#include &lt;iostream&gt;
+
+int main() {
+    std::cout &lt;&lt; "Hello, Muffin!";
+    return 0;
+}
+```
+
+## Release workflow
+
+Write, review, then export a PDF or keep the Markdown file.
+
+## Equations
+
+$$
+e^{i\pi} + 1 = 0
+$$</code></pre>
+                  </div>
+                </section>
+                <section
+                  class="editor-pane preview-pane"
+                  aria-label="Document pane"
+                >
+                  <div class="pane-header" hidden>
+                    <svg aria-hidden="true"><use href="#demo-lock" /></svg>
+                    <span>Read-only preview</span>
+                    <button
+                      type="button"
+                      id="demo-sync-scroll"
+                      aria-label="Synchronized scrolling"
+                      aria-pressed="true"
+                      title="Synchronized scrolling"
+                    >
+                      <svg aria-hidden="true"><use href="#demo-link" /></svg>
+                    </button>
+                  </div>
+                  <div
+                    class="window-document"
+                    tabindex="0"
+                    aria-label="English document preview"
+                  >
+                    <article class="demo-document" id="demo-render">
+                      <div class="readme-intro">
+                        <img
+                          class="readme-logo"
+                          src="/muffin.svg"
+                          width="180"
+                          height="180"
+                          alt=""
+                        />
+                        <h2 id="readme-title">Muffin</h2>
+                        <p class="readme-tagline">
+                          <strong
+                            >A native, lightweight, WYSIWYG Markdown
+                            editor.</strong
+                          >
+                        </p>
+                        <p class="readme-description">
+                          Muffin is a block-level WYSIWYG Markdown editor built
+                          from the ground up in C++ and Qt 6. Your Markdown file
+                          stays the single source of truth, rendered as a page
+                          you edit directly: no split panes, no preview pane, no
+                          typing lag.
+                        </p>
+                        <p class="readme-links">
+                          <a href="#download">Download</a> ·
+                          <a href="#features">Features</a> ·
+                          <a href="https://github.com/jstzwj/Muffin#development"
+                            >Build from source</a
+                          >
+                          ·
+                          <a
+                            href="https://github.com/jstzwj/Muffin#architecture"
+                            >Architecture</a
+                          >
+                        </p>
+                        <div
+                          class="readme-badges"
+                          aria-label="Project information"
+                        >
+                          <span class="readme-badge"
+                            ><span>C++</span><b class="badge-blue">20</b></span
+                          >
+                          <span class="readme-badge"
+                            ><span>Qt</span><b class="badge-green">6</b></span
+                          >
+                          <span class="readme-badge"
+                            ><span>platform</span
+                            ><b class="badge-platform"
+                              >Windows | macOS | Linux</b
+                            ></span
+                          >
+                          <span class="readme-badge"
+                            ><span>UI languages</span
+                            ><b class="badge-blue">15</b></span
+                          >
+                          <span class="readme-badge"
+                            ><span>releases</span
+                            ><b class="badge-dark">GitHub</b></span
+                          >
+                          <span class="readme-badge"
+                            ><span>license</span
+                            ><b class="badge-blue">MIT</b></span
+                          >
+                        </div>
+                        <p class="readme-language">
+                          Other languages:
+                          <a
+                            href="https://github.com/jstzwj/Muffin/blob/main/README.zh.md"
+                            >简体中文</a
+                          >
+                        </p>
+                      </div>
+                      <h3 id="readme-editor">Editor</h3>
+                      <p>
+                        Edit the document directly, or switch to its Markdown
+                        source.
+                      </p>
+                      <table class="demo-table">
+                        <thead>
+                          <tr>
+                            <th>Content</th>
+                            <th>Support</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Tables and tasks</td>
+                            <td>Direct editing</td>
+                          </tr>
+                          <tr>
+                            <td>Code blocks</td>
+                            <td>Syntax highlighting</td>
+                          </tr>
+                          <tr>
+                            <td>Equations</td>
+                            <td>LaTeX</td>
+                          </tr>
+                          <tr>
+                            <td>Diagrams</td>
+                            <td>Mermaid</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <h3 id="readme-build">Build</h3>
+                      <pre
+                        class="demo-code"
+                      ><code><span class="code-comment">// A small beginning.</span>
+<span class="code-keyword">#include</span> <span class="code-string">&lt;iostream&gt;</span>
+
+<span class="code-keyword">int</span> <span class="code-function">main</span>() {
+    std::cout &lt;&lt; <span class="code-string">"Hello, Muffin!"</span>;
+    <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}</code></pre>
+                      <h3 id="readme-workflow">Release workflow</h3>
+                      <p>
+                        Write, review, then export a PDF or keep the Markdown
+                        file.
+                      </p>
+                      <h3 id="readme-equations">Equations</h3>
+                      <p class="demo-equation" aria-label="Euler's identity">
+                        e<sup>iπ</sup> + 1 = 0
+                      </p>
+                    </article>
+                  </div>
+                </section>
               </div>
             </div>
-            <div class="hero__window product-hero" data-visual-kind="object">
-              <picture class="product-capture"
-                ><source
-                  media="(max-width:639px)"
-                  srcset="/screens/render-mobile.webp" />
-                <img
-                  src="/screens/render.webp"
-                  alt="Muffin 的原生编辑界面，显示文档大纲、表格与 C++ 代码"
-                  data-alt="render"
-                  width="1210"
-                  height="741"
-                  fetchpriority="high"
-                  data-source="client"
-                  data-subject="Muffin native editor"
-              /></picture>
+            <div class="window-status">
+              <div class="status-tools">
+                <button
+                  type="button"
+                  id="demo-view-render"
+                  aria-label="Document view"
+                  aria-pressed="true"
+                >
+                  <svg><use href="#demo-sidebar" /></svg>
+                </button>
+                <button
+                  type="button"
+                  id="demo-view-source"
+                  aria-label="Markdown source view"
+                  aria-pressed="false"
+                >
+                  <svg><use href="#demo-source-icon" /></svg>
+                </button>
+                <button
+                  type="button"
+                  id="demo-view-split"
+                  aria-label="Split view"
+                  aria-pressed="false"
+                >
+                  <svg><use href="#demo-split" /></svg>
+                </button>
+              </div>
+              <div class="status-document">
+                <span>UTF-8 | LF</span><span>1:1</span><span>EN⌄</span
+                ><span id="demo-word-count"></span>
+              </div>
             </div>
+          </div>
+          <div class="showcase-toolbar">
+            <div
+              class="view-tabs"
+              role="group"
+              aria-label="查看编辑器界面"
+              data-label="views"
+            >
+              <button
+                type="button"
+                data-view="render"
+                aria-pressed="true"
+                class="is-active"
+                data-i18n="renderView"
+              >
+                编辑视图
+              </button>
+              <button
+                type="button"
+                data-view="source"
+                aria-pressed="false"
+                data-i18n="sourceView"
+              >
+                Markdown 源码
+              </button>
+              <button
+                type="button"
+                data-view="split"
+                aria-pressed="false"
+                data-i18n="splitView"
+              >
+                左右分栏
+              </button>
+              <button
+                type="button"
+                data-view="night"
+                aria-pressed="false"
+                data-i18n="nightView"
+              >
+                Night 主题
+              </button>
+            </div>
+            <span class="showcase-platform" aria-hidden="true">C++ / Qt 6</span>
           </div>
         </div>
       </section>
 
       <section
-        id="editor"
-        class="section ground-surface"
-        aria-labelledby="editor-title"
+        id="performance"
+        class="performance wrap"
+        aria-labelledby="performance-title"
       >
-        <div class="wrap">
-          <div class="grid section-head">
-            <h2 id="editor-title" class="span-6" data-i18n="editorTitle">
-              编辑文档，<br />也能直接改源码。
-            </h2>
-            <div class="span-6 start-7">
-              <p data-i18n="editorText">
-                标题、表格与代码块都可以在页面上修改。切换到源码时，光标和阅读位置保持同步。
-              </p>
-              <div
-                class="view-tabs"
-                role="group"
-                aria-label="查看编辑器界面"
-                data-label="views"
-              >
-                <button
-                  type="button"
-                  data-view="render"
-                  aria-pressed="false"
-                  data-i18n="renderView"
-                >
-                  编辑视图</button
-                ><button
-                  type="button"
-                  data-view="source"
-                  aria-pressed="true"
-                  class="is-active"
-                  data-i18n="sourceView"
-                >
-                  Markdown 源码</button
-                ><button
-                  type="button"
-                  data-view="night"
-                  aria-pressed="false"
-                  data-i18n="nightView"
-                >
-                  Night 主题
-                </button>
-              </div>
-            </div>
-          </div>
-          <div
-            class="app-frame fill"
-            id="editor-screen"
-            data-view="source"
-            data-visual-kind="object"
+        <div class="performance-heading">
+          <span class="eyebrow" data-i18n="performanceLabel">为大文档而做</span>
+          <h2 id="performance-title" data-i18n="performanceTitle">
+            1 GiB 的 Markdown，<br />也能打开。
+          </h2>
+          <p data-i18n="performanceText">
+            按需排版屏幕内的内容，编辑时增量解析和更新。文档变长，也不用每敲一个字就重新渲染整篇。
+          </p>
+          <a
+            class="text-link"
+            href="https://github.com/jstzwj/Muffin/blob/main/docs/benchmarks/large-document-open-analysis-2026-10-18.md"
+            ><span data-i18n="benchmarkLink">查看大文件测试记录</span
+            ><span aria-hidden="true">↗</span></a
           >
-            <picture class="product-capture"
-              ><source
-                id="editor-mobile-image"
-                media="(max-width:639px)"
-                srcset="/screens/source-mobile.webp" />
-              <img
-                id="editor-image"
-                src="/screens/source.webp"
-                alt="Muffin 的 Markdown 源码视图"
-                data-alt="editor"
-                width="1210"
-                height="741"
-                loading="lazy"
-                data-source="client"
-                data-subject="Muffin desktop app"
-            /></picture>
+        </div>
+        <div
+          class="benchmark-visual"
+          data-visual
+          lang="en"
+          role="img"
+          aria-label="1 GiB mixed Markdown test file: 7,282,689 lines, headings, tables, code and equations"
+        >
+          <div class="benchmark-file">
+            <svg
+              width="28"
+              height="34"
+              viewBox="0 0 28 34"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M5 1h11l10 10v21H2V4a3 3 0 0 1 3-3Z"
+                stroke="currentColor"
+              />
+              <path d="M16 1v10h10M8 19h12M8 24h8" stroke="currentColor" /></svg
+            ><span>mixed-markdown.md<small>UTF-8 · Mixed syntax</small></span>
           </div>
+          <div class="benchmark-size">1 <span>GiB</span></div>
+          <div class="benchmark-lines">
+            1,073,741,824 bytes <span>7,282,689 lines</span>
+          </div>
+          <div class="benchmark-formats">
+            <span># Headings</span><span>| Tables</span
+            ><span>&lt;/&gt; Code</span><span>∑ Equations</span>
+          </div>
+        </div>
+        <p class="performance-note" data-i18n="performanceNote">
+          基于 Windows
+          下的混合文档压力测试。实际打开时间和内存占用取决于内容与设备。
+        </p>
+        <div class="native-benefits">
+          <article>
+            <span class="benefit-symbol" aria-hidden="true">C++</span>
+            <h3 data-i18n="nativeTitle">原生桌面应用</h3>
+            <p data-i18n="nativeText">
+              C++ 与 Qt 6 构建，不捆绑 Chromium，也不需要 Node.js 运行时。
+            </p>
+          </article>
+          <article>
+            <span class="benefit-symbol" aria-hidden="true">Aa</span>
+            <h3 data-i18n="directTitle">在排版后的页面上写</h3>
+            <p data-i18n="directText">
+              表格、代码和公式直接编辑；需要源码时，光标与阅读位置保持同步。
+            </p>
+          </article>
+          <article>
+            <span class="benefit-symbol" aria-hidden="true">.md</span>
+            <h3 data-i18n="portableTitle">文件属于你</h3>
+            <p data-i18n="portableText">
+              普通 Markdown 文件，离线使用；免费开源，采用 MIT 许可。
+            </p>
+          </article>
         </div>
       </section>
 
       <section
         id="features"
-        class="section document-features"
+        class="features wrap"
         aria-labelledby="features-title"
       >
-        <div class="wrap">
-          <div class="section-head">
+        <div class="section-divider">
+          <span data-i18n="featuresLabel">编辑与排版</span>
+        </div>
+        <div class="feature-story">
+          <div class="story-visual" data-visual lang="en">
+            <div class="technical-document">
+              <h3>Release workflow</h3>
+              <svg
+                class="workflow-diagram"
+                viewBox="0 0 460 170"
+                role="img"
+                aria-label="Write to Review, then Export PDF or Save Markdown"
+              >
+                <defs>
+                  <marker
+                    id="flow-arrow"
+                    viewBox="0 0 10 10"
+                    refX="9"
+                    refY="5"
+                    markerWidth="6"
+                    markerHeight="6"
+                    orient="auto-start-reverse"
+                  >
+                    <path d="M0 0 10 5 0 10Z" fill="#748f81" />
+                  </marker>
+                </defs>
+                <g
+                  fill="none"
+                  stroke="#748f81"
+                  stroke-width="1.4"
+                  marker-end="url(#flow-arrow)"
+                >
+                  <path d="M111 85h49" />
+                  <path d="M260 85h22q12 0 12-12V44q0-12 12-12h20" />
+                  <path d="M260 85h22q12 0 12 12v29q0 12 12 12h20" />
+                </g>
+                <g fill="#edf4ef" stroke="#c3d5ca">
+                  <rect x="11" y="65" width="100" height="40" rx="4" />
+                  <rect x="160" y="65" width="100" height="40" rx="4" />
+                  <rect x="326" y="12" width="123" height="40" rx="4" />
+                  <rect x="326" y="118" width="123" height="40" rx="4" />
+                </g>
+                <g
+                  fill="#314a3d"
+                  text-anchor="middle"
+                  dominant-baseline="middle"
+                  font-size="12"
+                >
+                  <text x="61" y="85">Write</text>
+                  <text x="210" y="85">Review</text>
+                  <text x="387" y="32">Export PDF</text>
+                  <text x="387" y="138">Save Markdown</text>
+                </g>
+              </svg>
+              <h3>Equations</h3>
+              <div class="technical-equation">
+                <math aria-label="Euler's identity"
+                  ><msup
+                    ><mi>e</mi><mrow><mi>i</mi><mi>π</mi></mrow></msup
+                  ><mo>+</mo><mn>1</mn><mo>=</mo><mn>0</mn></math
+                >
+              </div>
+            </div>
+          </div>
+          <div class="story-copy">
             <h2 id="features-title" data-i18n="featuresTitle">
-              代码、图表和公式，<br />放在同一份文档里。
+              代码、图表和公式，<br />就在文档里。
             </h2>
+            <p data-i18n="featuresText">
+              用带语法高亮的代码块记录实现，用 Mermaid 说明流程，用 LaTeX
+              写下公式。它们都保存在同一份 Markdown 文件中。
+            </p>
+            <p data-i18n="sourceText">
+              需要查看源码时，切换即可。光标和阅读位置会保持同步。
+            </p>
+            <a class="text-link" href="#editor"
+              ><span data-i18n="viewEditor">查看编辑器界面</span
+              ><span aria-hidden="true">↑</span></a
+            >
           </div>
-          <div class="grid content-cards fill">
-            <article class="content-card span-6">
-              <h3 data-i18n="codeTitle">编辑代码与表格</h3>
-              <p data-i18n="codeText">
-                代码块支持语法高亮，表格可以直接增删行列。
-              </p>
-              <div class="detail-image">
-                <img
-                  src="/screens/code.webp"
-                  srcset="
-                    /screens/code-mobile.webp 684w,
-                    /screens/code.webp        808w
-                  "
-                  sizes="(max-width: 639px) calc(100vw - 48px), (max-width: 1023px) calc(100vw - 96px), (min-width: 1440px) 628px, calc((100vw - 184px) / 2)"
-                  alt="Muffin 中带语法高亮的 C++ 代码块"
-                  data-alt="code"
-                  width="808"
-                  height="378"
-                  loading="lazy"
-                  data-source="client"
-                  data-subject="C++ code in Muffin"
-                />
+        </div>
+        <div class="detail-grid">
+          <article class="detail-card">
+            <div class="detail-image detail-image--table" data-visual lang="en">
+              <table class="demo-table fragment-table">
+                <thead>
+                  <tr>
+                    <th>Feature</th>
+                    <th>Format</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Equations</td>
+                    <td>LaTeX</td>
+                  </tr>
+                  <tr>
+                    <td class="active-cell">Diagrams</td>
+                    <td>Mermaid</td>
+                  </tr>
+                  <tr>
+                    <td>Documents</td>
+                    <td>.md</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 data-i18n="tableTitle">直接编辑表格</h3>
+            <p data-i18n="tableText">在单元格中输入，直接增删行列。</p>
+          </article>
+          <article class="detail-card">
+            <div class="detail-image detail-image--code" data-visual lang="en">
+              <pre
+                class="demo-code fragment-code"
+              ><code><span class="code-keyword">#include</span> <span class="code-string">&lt;iostream&gt;</span>
+
+<span class="code-keyword">int</span> <span class="code-function">main</span>() {
+  std::cout &lt;&lt; <span class="code-string">"Muffin"</span>;
+  <span class="code-keyword">return</span> <span class="code-number">0</span>;
+}</code></pre>
+            </div>
+            <h3 data-i18n="codeTitle">代码语法高亮</h3>
+            <p data-i18n="codeText">支持 20 多种语言的代码高亮。</p>
+          </article>
+          <article class="detail-card">
+            <div
+              class="detail-image detail-image--formula"
+              data-visual
+              lang="en"
+            >
+              <math aria-label="Euler's identity"
+                ><msup
+                  ><mi>e</mi><mrow><mi>i</mi><mi>π</mi></mrow></msup
+                ><mo>+</mo><mn>1</mn><mo>=</mo><mn>0</mn></math
+              >
+            </div>
+            <h3 data-i18n="mathTitle">LaTeX 数学公式</h3>
+            <p data-i18n="mathText">行内和独立公式，由原生引擎渲染。</p>
+          </article>
+          <article class="detail-card">
+            <div class="detail-image detail-image--night" data-visual lang="en">
+              <div class="fragment-night">
+                <h4>Development notes</h4>
+                <p>One file. Your own workspace.</p>
+                <div class="night-task is-done">Write the first draft</div>
+                <div class="night-task is-done">Review the changes</div>
+                <div class="night-task">Ship something useful</div>
               </div>
-            </article>
-            <article class="content-card span-6">
-              <h3 data-i18n="technicalTitle">写公式，画流程图</h3>
-              <p data-i18n="technicalText">
-                LaTeX 数学公式与 Mermaid 图表，由原生引擎渲染。
-              </p>
-              <div class="detail-image">
-                <img
-                  src="/screens/technical.webp"
-                  srcset="
-                    /screens/technical-mobile.webp 684w,
-                    /screens/technical.webp        808w
-                  "
-                  sizes="(max-width: 639px) calc(100vw - 48px), (max-width: 1023px) calc(100vw - 96px), (min-width: 1440px) 628px, calc((100vw - 184px) / 2)"
-                  alt="Muffin 原生渲染的 Mermaid 流程图与 LaTeX 公式"
-                  data-alt="technical"
-                  width="808"
-                  height="347"
-                  loading="lazy"
-                  data-source="client"
-                  data-subject="Mermaid and LaTeX in Muffin"
-                />
-              </div>
-            </article>
+            </div>
+            <h3 data-i18n="themeTitle">五款内置主题</h3>
+            <p data-i18n="themeText">从 GitHub 到 Night，也支持自己的 CSS。</p>
+          </article>
+        </div>
+        <div class="file-note">
+          <div>
+            <h3 data-i18n="localTitle">本地文件，离线也能写。</h3>
+            <p data-i18n="localText">
+              文档就是普通的 .md 文件，可以用其他编辑器打开。Muffin 使用 C++ 和
+              Qt 6 构建，免费开源。
+            </p>
           </div>
+          <a class="text-link" href="https://github.com/jstzwj/Muffin"
+            ><span data-i18n="source">查看源码</span
+            ><span aria-hidden="true">↗</span></a
+          >
         </div>
       </section>
 
       <section
         id="questions"
-        class="section ground-surface"
+        class="questions wrap"
         aria-labelledby="questions-title"
       >
-        <div class="wrap">
-          <h2 id="questions-title" data-i18n="questionsTitle">
-            文件、导出与主题。
+        <div class="section-divider">
+          <h2 id="questions-title" data-i18n="questionsTitle">常见问题</h2>
+        </div>
+        <div class="questions-list">
+          <details>
+            <summary data-i18n="questionFiles">
+              已有的 Markdown 文件能直接打开吗？
+            </summary>
+            <p data-i18n="answerFiles">
+              可以，直接打开现有的 .md
+              文件即可，无需导入或转换。切换到源码模式，可以查看和修改原始
+              Markdown。
+            </p>
+          </details>
+          <details>
+            <summary data-i18n="questionExport">支持哪些导出格式？</summary>
+            <p data-i18n="answerExport">
+              可以直接导出 PDF、HTML 和 PNG。导出 Word、EPUB
+              等格式时，需要另行安装 Pandoc。
+            </p>
+          </details>
+          <details>
+            <summary data-i18n="questionThemes">可以自定义主题吗？</summary>
+            <p data-i18n="answerThemes">
+              内置 GitHub、Newsprint、Night、Pixyll 和 Whitey
+              五款主题，也可以导入自己编写的 CSS 主题。
+            </p>
+          </details>
+          <details>
+            <summary data-i18n="questionLicense">需要付费吗？</summary>
+            <p data-i18n="answerLicense">
+              免费使用，源码采用 MIT 许可。你可以在 GitHub
+              查看源码、反馈问题或参与开发。
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <section
+        id="download"
+        class="download-section wrap"
+        aria-labelledby="download-title"
+      >
+        <div class="download-heading">
+          <h2 id="download-title" data-i18n="downloadTitle">
+            在桌面上试试 Muffin。
           </h2>
-          <div class="questions-list fill">
-            <article>
-              <h3 data-i18n="questionFiles">文档存在哪里？</h3>
-              <p data-i18n="answerFiles">
-                保存在本地，格式就是 .md。可以离线编辑，也可以用其他 Markdown
-                工具打开。
-              </p>
-            </article>
-            <article>
-              <h3 data-i18n="questionExport">支持哪些导出格式？</h3>
-              <p data-i18n="answerExport">
-                原生导出 PDF、HTML 和 PNG。导出 Word、EPUB
-                等格式时，需要另行安装 Pandoc。
-              </p>
-            </article>
-            <article>
-              <h3 data-i18n="questionThemes">可以改主题吗？</h3>
-              <p data-i18n="answerThemes">
-                内置 GitHub、Newsprint、Night、Pixyll 和
-                Whitey，也可以导入自己编写的 CSS 主题。
-              </p>
-            </article>
-            <article>
-              <h3 data-i18n="questionLicense">需要付费吗？</h3>
-              <p data-i18n="answerLicense">
-                免费使用，源码采用 MIT 许可。问题反馈与开发进度都在 GitHub
-                仓库。
-              </p>
-            </article>
+          <p data-i18n="downloadText">
+            免费开源，支持 Windows、macOS 和 Linux。
+          </p>
+        </div>
+        <div class="platform-grid">
+          <div class="platform-item">
+            <a
+              id="download-windows"
+              data-download="windows"
+              class="btn btn--primary"
+              href="https://github.com/jstzwj/Muffin/releases/latest"
+              ><span>Windows</span><span data-windows-architecture>x64</span
+              ><span aria-hidden="true">↓</span></a
+            ><span class="package-type" data-i18n="windowsPackage"
+              >MSI 安装包</span
+            >
           </div>
+          <div class="platform-item">
+            <a
+              id="download-macos"
+              data-download="macos"
+              class="btn btn--secondary"
+              href="https://github.com/jstzwj/Muffin/releases/latest"
+              ><span>macOS</span><span>Apple Silicon</span
+              ><span aria-hidden="true">↓</span></a
+            ><span class="package-type" data-i18n="macPackage"
+              >DMG 安装包 · ARM64</span
+            >
+          </div>
+          <div class="platform-item">
+            <a
+              id="download-linux"
+              data-download="linux"
+              class="btn btn--secondary"
+              href="https://github.com/jstzwj/Muffin/releases/latest"
+              ><span>Linux</span><span>x64</span
+              ><span aria-hidden="true">↓</span></a
+            ><span class="package-type">tar.gz</span>
+          </div>
+        </div>
+        <div class="architecture-row">
+          <span data-i18n="windowsArchitecture">Windows 架构</span>
+          <div
+            class="architecture-picker"
+            role="group"
+            aria-label="Windows 架构"
+            data-label="architecture"
+          >
+            <button
+              type="button"
+              data-architecture="x64"
+              aria-pressed="true"
+              class="is-active"
+            >
+              x64</button
+            ><button
+              type="button"
+              data-architecture="arm64"
+              aria-pressed="false"
+            >
+              ARM64
+            </button>
+          </div>
+        </div>
+        <div class="release-links">
+          <a
+            id="release-notes"
+            href="https://github.com/jstzwj/Muffin/releases/latest"
+            ><span id="release-version" data-i18n="releaseNotes"
+              >发行说明</span
+            ></a
+          ><span aria-hidden="true">·</span
+          ><a
+            href="https://github.com/jstzwj/Muffin/releases"
+            data-i18n="allDownloads"
+            >其他版本与便携包 ↗</a
+          >
         </div>
       </section>
     </main>
-    <footer
-      id="download"
-      class="closing footer--dark ground-inverse"
-      aria-labelledby="download-title"
-    >
-      <div class="wrap">
-        <div class="closing__cta close--type">
-          <h2 id="download-title" data-i18n="downloadTitle">下载 Muffin。</h2>
-          <p class="t-small muted" data-i18n="downloadText">
-            选择你的系统和架构，安装包来自 GitHub Releases。
-          </p>
-          <a
-            class="btn btn--primary btn--xl"
-            href="https://github.com/jstzwj/Muffin/releases/latest"
-            data-i18n="download"
-            >下载 Muffin</a
+    <footer class="site-footer wrap">
+      <div class="footer-directory">
+        <div class="footer-brand">
+          <a class="brand" href="#top"
+            ><img
+              src="/muffin.svg"
+              alt=""
+              width="40"
+              height="40"
+              loading="lazy"
+            /><span>Muffin</span></a
+          >
+          <p data-i18n="footerDescription">原生桌面 Markdown 编辑器。</p>
+        </div>
+        <div class="footer-column">
+          <h3 data-i18n="footerProduct">产品</h3>
+          <a href="#editor" data-i18n="viewEditor">查看编辑器界面</a
+          ><a href="#features" data-i18n="navFeatures">功能</a
+          ><a href="#download" data-i18n="download">下载 Muffin</a
+          ><a
+            href="https://github.com/jstzwj/Muffin/blob/main/README.zh.md"
+            data-documentation
+            data-i18n="documentation"
+            >使用说明</a
           >
         </div>
-        <div class="closing__links">
-          <div class="grid platform-grid">
-            <div class="platform-item span-4">
-              <h3>Windows</h3>
-              <div
-                class="architecture-picker"
-                role="group"
-                aria-label="Windows 架构"
-                data-label="architecture"
-              >
-                <button
-                  type="button"
-                  data-architecture="x64"
-                  class="is-active"
-                  aria-pressed="true"
-                >
-                  x64</button
-                ><button
-                  type="button"
-                  data-architecture="arm64"
-                  aria-pressed="false"
-                >
-                  ARM64
-                </button>
-              </div>
-              <a
-                id="download-windows"
-                class="link"
-                href="https://github.com/jstzwj/Muffin/releases/latest"
-                data-i18n="downloadWindows"
-                >下载 MSI 安装包 ↗</a
-              >
-            </div>
-            <div class="platform-item span-4">
-              <h3>macOS</h3>
-              <p class="t-small muted">Apple Silicon · ARM64</p>
-              <a
-                id="download-macos"
-                class="link"
-                href="https://github.com/jstzwj/Muffin/releases/latest"
-                data-i18n="downloadMac"
-                >下载 DMG 安装包 ↗</a
-              >
-            </div>
-            <div class="platform-item span-4">
-              <h3>Linux</h3>
-              <p class="t-small muted">x64 · tar.gz</p>
-              <a
-                id="download-linux"
-                class="link"
-                href="https://github.com/jstzwj/Muffin/releases/latest"
-                data-i18n="downloadLinux"
-                >下载 Linux 压缩包 ↗</a
-              >
-            </div>
-          </div>
-          <div class="release-links">
-            <a
-              href="https://github.com/jstzwj/Muffin/releases/latest"
-              class="link"
-              id="release-notes"
-              ><span id="release-version" data-i18n="releaseNotes"
-                >发行说明</span
-              ></a
-            ><a
-              class="link"
-              href="https://github.com/jstzwj/Muffin/releases"
-              data-i18n="allDownloads"
-              >其他版本与便携包 ↗</a
-            >
-          </div>
-          <div class="footer__legal">
-            <a class="footer-logo" href="#top"
-              ><img src="/muffin.svg" width="28" height="28" alt="" />Muffin</a
-            ><span>© 2026 Muffin Contributors</span
-            ><a
-              href="https://github.com/jstzwj/Muffin/blob/main/LICENSE"
-              data-i18n="license"
-              >MIT 许可</a
-            ><a
-              href="https://github.com/jstzwj/Muffin/issues"
-              data-i18n="issues"
-              >反馈问题 ↗</a
-            ><a href="https://github.com/jstzwj/Muffin" data-i18n="source"
-              >查看源码</a
-            >
-          </div>
+        <div class="footer-column">
+          <h3 data-i18n="footerProject">开源项目</h3>
+          <a href="https://github.com/jstzwj/Muffin" data-i18n="source"
+            >查看源码</a
+          ><a href="https://github.com/jstzwj/Muffin/issues" data-i18n="issues"
+            >反馈问题</a
+          ><a
+            href="https://github.com/jstzwj/Muffin/releases"
+            data-i18n="releaseNotes"
+            >发行说明</a
+          ><a
+            href="https://github.com/jstzwj/Muffin/blob/main/LICENSE"
+            data-i18n="license"
+            >MIT 许可</a
+          >
         </div>
       </div>
+      <div class="footer-legal">
+        <span>© 2026 Muffin Contributors</span
+        ><span>Windows · macOS · Linux</span>
+      </div>
     </footer>
-    <script type="module" src="/assets/system.js"></script>
     <script type="module" src="/assets/motion/motion.js"></script>
-    <script type="module" src="/assets/layout/layout.js"></script>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

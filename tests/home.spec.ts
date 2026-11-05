@@ -18,42 +18,72 @@ test.beforeEach(async ({ page }) => {
   await page.route("https://api.github.com/**", (route) => route.abort());
 });
 
-test("real product views, bilingual copy and downloads work with the production CSP", async ({
+test("HTML product views, bilingual copy and downloads work with the production CSP", async ({
   page,
 }) => {
   const errors: string[] = [];
+  const screenshotRequests: string[] = [];
+  page.on("request", (request) => {
+    if (request.url().includes("/screens/"))
+      screenshotRequests.push(request.url());
+  });
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("console", (message) => {
     if (message.type() === "error" && !message.text().includes("ERR_FAILED"))
       errors.push(message.text());
   });
   await page.goto("/");
-  await expect(page.locator("#hero-title")).toContainText("Markdown 编辑器");
-  for (const view of ["source", "night", "render"]) {
+  await expect(page.locator("#hero-title")).toHaveText("Muffin");
+  await expect(page.locator(".intro-category")).toContainText(
+    "Markdown 编辑器",
+  );
+  for (const view of ["source", "split", "night", "render"]) {
     await page.locator(`button[data-view="${view}"]`).click();
     await expect(page.locator("#editor-screen")).toHaveAttribute(
       "data-view",
       view,
     );
-    await expect(page.locator("#editor-image")).toHaveAttribute(
-      "src",
-      `/screens/${view}.webp`,
-    );
+    if (view === "source" || view === "split") {
+      await expect(page.locator("#demo-source")).toBeVisible();
+      await expect(page.locator("#demo-source")).toContainText(
+        "#include <iostream>",
+      );
+      if (view === "source")
+        await expect(page.locator("#demo-render")).toBeHidden();
+      else await expect(page.locator("#demo-render")).toBeVisible();
+    } else {
+      await expect(page.locator("#demo-render")).toBeVisible();
+      await expect(page.locator("#readme-title")).toHaveText("Muffin");
+      await expect(page.locator("#demo-source")).toBeHidden();
+      await expect(page.locator("#editor-screen")).toHaveCSS(
+        "background-color",
+        view === "night" ? "rgb(48, 55, 58)" : "rgb(255, 255, 255)",
+      );
+    }
     await expect(page.locator(`button[data-view="${view}"]`)).toHaveAttribute(
       "aria-pressed",
       "true",
     );
-    await expect
-      .poll(() =>
-        page
-          .locator("#editor-image")
-          .evaluate(
-            (image: HTMLImageElement) =>
-              image.complete && image.naturalWidth > 0,
-          ),
-      )
-      .toBeTruthy();
   }
+  await expect(page.locator("#performance-title")).toContainText("1 GiB");
+  await expect(page.locator(".window-menubar span")).toHaveText([
+    "File",
+    "Edit",
+    "Paragraph",
+    "Insert",
+    "Format",
+    "View",
+    "Themes",
+    "Help",
+  ]);
+  await expect(page.locator(".window-sidebar")).toBeVisible();
+  await expect(page.locator("#demo-files")).toContainText("README.md");
+  await expect(page.locator(".status-document")).toContainText("UTF-8 | LF");
+  await expect(page.locator(".benchmark-visual")).toContainText(
+    "1,073,741,824 bytes",
+  );
+  await expect(page.locator(".workflow-diagram")).toBeVisible();
+  await expect(page.locator(".detail-image math")).toBeVisible();
   await expect(page.locator("#download-windows")).toHaveAttribute(
     "href",
     /v0\.7\.12.*windows-x64\.msi$/,
@@ -71,80 +101,222 @@ test("real product views, bilingual copy and downloads work with the production 
     "href",
     /linux-x64\.tar\.gz$/,
   );
-  const menu = page.locator(".nav__toggle");
-  if (await menu.isVisible()) await menu.click();
   await page.getByRole("button", { name: "Switch to English" }).click();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
-  await expect(page.locator("#hero-title")).toContainText("A native desktop");
+  await expect(page.locator(".intro-category")).toContainText(
+    "A native desktop",
+  );
   await expect(page.locator("#release-version")).toHaveText(
     "v0.7.12 · Release notes",
   );
+  for (const link of await page.locator("[data-documentation]").all()) {
+    await expect(link).toHaveAttribute(
+      "href",
+      "https://github.com/jstzwj/Muffin/blob/main/README.md",
+    );
+  }
   // English download copy must fit too; it is longer than the Chinese version.
   expect(
     await page.locator("#download").evaluate((footer) => {
-      const action = footer
-        .querySelector(".closing__cta > .btn")!
+      const heading = footer
+        .querySelector(".download-heading")!
         .getBoundingClientRect();
       const platforms = footer
         .querySelector(".platform-grid")!
         .getBoundingClientRect();
-      const legal = footer
-        .querySelector(".footer__legal")!
+      const architectures = footer
+        .querySelector(".architecture-row")!
+        .getBoundingClientRect();
+      const releases = footer
+        .querySelector(".release-links")!
         .getBoundingClientRect();
       return {
-        actionOverlapsPlatforms: action.bottom > platforms.top,
-        overlap: Math.round(Math.max(0, action.bottom - platforms.top)),
-        legalOverflowsFooter:
-          legal.bottom > footer.getBoundingClientRect().bottom,
+        headingsOverlap: heading.bottom > platforms.top,
+        platformsOverlap: platforms.bottom > architectures.top,
+        architecturesOverlap: architectures.bottom > releases.top,
+        contentOverflows:
+          releases.bottom > footer.getBoundingClientRect().bottom,
       };
     }),
   ).toEqual({
-    actionOverlapsPlatforms: false,
-    legalOverflowsFooter: false,
-    overlap: 0,
+    headingsOverlap: false,
+    platformsOverlap: false,
+    architecturesOverlap: false,
+    contentOverflows: false,
   });
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
-  if (await menu.isVisible()) await menu.click();
   await page.getByRole("button", { name: "切换到简体中文" }).click();
-  if (await menu.isVisible()) await menu.click();
+  for (const link of await page.locator("[data-documentation]").all()) {
+    await expect(link).toHaveAttribute(
+      "href",
+      "https://github.com/jstzwj/Muffin/blob/main/README.zh.md",
+    );
+  }
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth,
     ),
   ).toBeTruthy();
-  // Every lazy screenshot must load when brought into view.
-  for (const image of await page.locator("main img").all()) {
-    await image.scrollIntoViewIfNeeded();
-    await expect
-      .poll(() =>
-        image.evaluate(
-          (element: HTMLImageElement) =>
-            element.complete && element.naturalWidth > 0,
-        ),
-      )
-      .toBeTruthy();
-  }
+  expect(screenshotRequests).toEqual([]);
   expect(errors).toEqual([]);
 });
 
-test("navigation links remain usable on touch screens", async ({ page }) => {
+test("Muffin sidebar tabs, outline navigation and status controls work", async ({
+  page,
+}) => {
   await page.goto("/");
-  const toggle = page.locator(".nav__toggle");
-  if (await toggle.isVisible()) {
-    await toggle.click();
-    await expect(toggle).toHaveAttribute("aria-expanded", "true");
-    await page
-      .locator('.nav__links > .nav__item > a[href="#questions"]')
-      .click();
-    await expect(toggle).toHaveAttribute("aria-expanded", "false");
-    await expect(page.locator("body")).not.toHaveClass(/nav-locked/);
-  } else {
-    await page
-      .locator('.nav__links > .nav__item > a[href="#questions"]')
-      .click();
-  }
-  await expect(page).toHaveURL(/#questions$/);
+  const filesTab = page.getByRole("tab", { name: "Files", exact: true });
+  const outlineTab = page.getByRole("tab", { name: "Outline", exact: true });
+  await expect(filesTab).toHaveAttribute("aria-selected", "true");
+  await filesTab.focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(outlineTab).toBeFocused();
+  await expect(outlineTab).toHaveAttribute("aria-selected", "true");
+  await expect(page.locator("#demo-files")).toBeHidden();
+  await page.locator('[data-document-heading="readme-build"]').click();
+  expect(
+    await page.locator(".window-document").evaluate((el) => el.scrollTop),
+  ).toBeGreaterThan(100);
+  await page
+    .getByRole("button", { name: "Markdown source view", exact: true })
+    .click();
+  await expect(page.locator("#demo-source")).toBeVisible();
+  await expect(page.locator('button[data-view="source"]')).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
+  await page.getByRole("button", { name: "Split view", exact: true }).click();
+  await expect(page.locator("#demo-render")).toBeVisible();
+  await expect(page.locator("#demo-source")).toBeVisible();
+  await page
+    .getByRole("button", { name: "Document view", exact: true })
+    .click();
+  await expect(page.locator(".window-sidebar")).toBeVisible();
+  await filesTab.click();
+  await expect(page.locator("#demo-files")).toBeVisible();
+  await expect(page.locator("#demo-outline")).toBeHidden();
+});
+
+test("source line numbers, split panes and synchronized scrolling match the document", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.locator('button[data-view="source"]').click();
+  await expect(
+    page.locator('.source-line[data-line="1"] .source-line-text'),
+  ).toHaveText('<div align="center">');
+  await expect(
+    page.locator('.source-line[data-line="5"] .source-heading'),
+  ).toHaveText("# Muffin");
+  await expect(
+    page.locator('.source-line[data-line="9"] .source-line-text'),
+  ).toContainText("no typing lag.");
+  const source = page.locator("#demo-source");
+  const preview = page.locator(".window-document");
+  await page.locator('button[data-view="split"]').click();
+  await expect(page.locator(".source-pane .pane-header")).toHaveText(
+    "Markdown source",
+  );
+  await expect(page.locator(".preview-pane .pane-header")).toContainText(
+    "Read-only preview",
+  );
+  const sourceBox = (await source.boundingBox())!;
+  const previewBox = (await preview.boundingBox())!;
+  expect(sourceBox.x + sourceBox.width).toBeLessThanOrEqual(previewBox.x);
+  expect(Math.abs(sourceBox.y - previewBox.y)).toBeLessThan(1);
+  expect(sourceBox.width).toBeGreaterThan(130);
+  expect(previewBox.width).toBeGreaterThan(130);
+
+  // Scroll a real logical line to the top; the matching rendered heading follows,
+  // regardless of how many visual rows the long source paragraphs occupy.
+  await source.evaluate((viewport) => {
+    const line = [
+      ...viewport.querySelectorAll<HTMLElement>(".source-line"),
+    ].find((row) => row.querySelector("code")?.textContent === "## Editor")!;
+    viewport.scrollTop +=
+      line.getBoundingClientRect().top - viewport.getBoundingClientRect().top;
+  });
+  await expect
+    .poll(() => preview.evaluate((el) => el.scrollTop))
+    .toBeGreaterThan(100);
+  const distance = await preview.evaluate((el) =>
+    Math.abs(
+      el.querySelector("#readme-editor")!.getBoundingClientRect().top -
+        el.getBoundingClientRect().top,
+    ),
+  );
+  expect(distance).toBeLessThan(3);
+  const position = await preview.evaluate((el) => el.scrollTop);
+  await page
+    .getByRole("button", { name: "Synchronized scrolling", exact: true })
+    .click();
+  await source.evaluate((el) => (el.scrollTop = el.scrollHeight));
+  await expect(preview).toHaveJSProperty("scrollTop", position);
+  await page
+    .getByRole("button", { name: "Synchronized scrolling", exact: true })
+    .click();
+  await expect
+    .poll(() => preview.evaluate((el) => el.scrollTop))
+    .toBeGreaterThan(position + 20);
+  await preview.evaluate((el) => (el.scrollTop = 0));
+  await expect
+    .poll(() => source.evaluate((el) => el.scrollTop))
+    .toBeLessThan(2);
+
+  await source.evaluate((el) => (el.scrollTop = 400));
+  await expect
+    .poll(() => preview.evaluate((el) => el.scrollTop))
+    .toBeGreaterThan(20);
+  await page.locator('button[data-view="render"]').click();
+  expect(await preview.evaluate((el) => el.scrollTop)).toBeGreaterThan(20);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBeTruthy();
+});
+
+test("section links and FAQ work on touch screens", async ({ page }) => {
+  await page.goto("/");
+  const headerLink = page.locator('.site-header a[href="#features"]');
+  if (await headerLink.isVisible()) await headerLink.click();
+  else await page.locator('.site-footer a[href="#features"]').click();
+  await expect(page).toHaveURL(/#features$/);
+  const question = page.locator(".questions-list details").nth(1);
+  await question.locator("summary").click();
+  await expect(question.locator("p")).toBeVisible();
+  await expect(question.locator("p")).toContainText("Pandoc");
+  await question.locator("summary").click();
+  await expect(question.locator("p")).not.toBeVisible();
+});
+
+test("download menu exposes verified assets and closes with Escape or an outside click", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const picker = page.locator(".download-picker");
+  const toggle = picker.locator("summary");
+  await toggle.click();
+  await expect(picker).toHaveJSProperty("open", true);
+  await expect(picker.locator('[data-download="macos"]')).toHaveAttribute(
+    "href",
+    /macos-arm64\.dmg$/,
+  );
+  await page.keyboard.press("Escape");
+  await expect(picker).toHaveJSProperty("open", false);
+  await expect(toggle).toBeFocused();
+  await page.getByRole("button", { name: "ARM64", exact: true }).click();
+  await toggle.click();
+  await expect(picker.locator('[data-download="windows"]')).toHaveAttribute(
+    "href",
+    /windows-arm64\.msi$/,
+  );
+  await expect(picker.locator("[data-windows-architecture]")).toHaveText(
+    "ARM64",
+  );
+  await page.locator("#hero-title").click();
+  await expect(picker).toHaveJSProperty("open", false);
 });
 
 test("a newer release updates matching assets and missing platforms use the release page", async ({

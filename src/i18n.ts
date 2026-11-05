@@ -2,84 +2,83 @@ export type Language = "zh" | "en";
 
 export const english: Record<string, string> = {
   skip: "Skip to content",
-  navEditor: "Editor",
   navFeatures: "Features",
   navQuestions: "FAQ",
-  menuEditing: "Editing",
-  menuViews: "Document and source views",
-  menuContents: "Document content",
-  menuBlocks: "Code, diagrams and equations",
-  menuFiles: "Files and export",
-  menuFormats: "Markdown and other formats",
   download: "Download Muffin",
+  documentation: "Read the docs",
   source: "View source",
-  heroNotice: "Muffin · Windows / macOS / Linux",
-  heroTitle: "A native desktop<br />Markdown editor.",
+  heroCategory: "A native desktop Markdown editor.",
   heroLead:
-    'Built with C++ and Qt 6. Edit the formatted document,<br class="desktop-break" /> switch to source, and save ordinary .md files.',
-  editorTitle: "Edit the document.<br />Or edit its source.",
-  editorText:
-    "Change headings, tables and code blocks directly on the page. Your cursor and reading position stay in sync when you switch to source.",
+    'From a few pages of notes to 1 GiB of Markdown.<br class="desktop-break" /> Native C++ / Qt 6. Write directly on the formatted page.',
+  performanceLabel: "Built for long documents",
+  performanceTitle: "Open a 1 GiB<br />Markdown file.",
+  performanceText:
+    "Lay out what is on screen. Parse and update what changed. A longer document does not mean rendering everything again with every keystroke.",
+  benchmarkLink: "Read the large-file test report",
+  performanceNote:
+    "Based on the mixed-document stress test on Windows. Opening time and memory use depend on the content and your hardware.",
+  nativeTitle: "A native desktop app",
+  nativeText:
+    "Built with C++ and Qt 6. No bundled Chromium or Node.js runtime.",
+  directTitle: "Write on the formatted page",
+  directText:
+    "Edit tables, code and equations directly. Your cursor and reading position stay in sync with source mode.",
+  portableTitle: "Your files stay yours",
+  portableText:
+    "Ordinary Markdown files. Works offline. Free and open source under the MIT license.",
   renderView: "Document view",
   sourceView: "Markdown source",
+  splitView: "Split view",
   nightView: "Night theme",
-  featuresTitle: "Code, diagrams and equations.<br />In one Markdown file.",
-  codeTitle: "Edit code and tables",
-  codeText:
-    "Syntax highlighting for code blocks. Add and remove table rows and columns directly.",
-  technicalTitle: "Write equations and flowcharts",
-  technicalText: "Native rendering for LaTeX math and Mermaid diagrams.",
-  questionsTitle: "Files, export and themes.",
-  questionFiles: "Where are documents stored?",
+  featuresLabel: "Editing & formatting",
+  featuresTitle: "Code, diagrams and equations.<br />Right in your document.",
+  featuresText:
+    "Document an implementation with highlighted code, a process with Mermaid, or an equation with LaTeX. Keep them together in one Markdown file.",
+  sourceText:
+    "Switch to source whenever you need it. Your cursor and reading position stay in sync.",
+  viewEditor: "See the editor",
+  tableTitle: "Editable tables",
+  tableText: "Type in cells. Add and remove rows and columns directly.",
+  codeTitle: "Syntax highlighting",
+  codeText: "Highlighted code blocks for over 20 languages.",
+  mathTitle: "LaTeX equations",
+  mathText: "Inline and display math, rendered natively.",
+  themeTitle: "Five built-in themes",
+  themeText: "From GitHub to Night. Custom CSS themes, too.",
+  localTitle: "Local files. Offline editing.",
+  localText:
+    "Documents are ordinary .md files that open in other editors. Muffin is built with C++ and Qt 6, and is free and open source.",
+  questionsTitle: "Frequently asked questions",
+  questionFiles: "Can I open my existing Markdown files?",
   answerFiles:
-    "Locally, as .md files. Edit offline and open the same files in other Markdown tools.",
+    "Yes. Open your existing .md files directly, with no import or conversion. Switch to source mode to view and edit the original Markdown.",
   questionExport: "Which formats can I export?",
   answerExport:
-    "Export PDF, HTML and PNG natively. Word, EPUB and other formats require a separate Pandoc installation.",
-  questionThemes: "Can I change the theme?",
+    "Export PDF, HTML and PNG directly. Word, EPUB and other formats require a separate Pandoc installation.",
+  questionThemes: "Can I customize the theme?",
   answerThemes:
-    "Choose GitHub, Newsprint, Night, Pixyll or Whitey, or import your own CSS theme.",
+    "Choose from GitHub, Newsprint, Night, Pixyll and Whitey, or import your own CSS theme.",
   questionLicense: "Does it cost anything?",
   answerLicense:
-    "Muffin is free, with source code under the MIT license. Report issues and follow development on GitHub.",
-  downloadTitle: "Download Muffin.",
-  downloadText:
-    "Choose your system and architecture. Installers are hosted on GitHub Releases.",
-  downloadWindows: "Download MSI installer ↗",
-  downloadMac: "Download DMG installer ↗",
-  downloadLinux: "Download Linux archive ↗",
+    "Muffin is free, with source code under the MIT license. Browse the code, report issues or contribute on GitHub.",
+  downloadTitle: "Try Muffin on your desktop.",
+  downloadText: "Free and open source. For Windows, macOS and Linux.",
+  windowsPackage: "MSI installer",
+  macPackage: "DMG installer · ARM64",
+  windowsArchitecture: "Windows architecture",
   releaseNotes: "Release notes",
-  allDownloads: "Other versions and portable builds ↗",
+  allDownloads: "Other versions & portable builds ↗",
+  footerDescription: "A native desktop Markdown editor.",
+  footerProduct: "Product",
+  footerProject: "Open source",
   license: "MIT license",
-  issues: "Report an issue ↗",
+  issues: "Report an issue",
 };
 
 export const labels: Record<string, [string, string]> = {
   navigation: ["主导航", "Main navigation"],
-  menu: ["菜单", "Menu"],
+  editor: ["Muffin 编辑器界面", "Muffin editor"],
   views: ["查看编辑器界面", "Editor views"],
   architecture: ["Windows 架构", "Windows architecture"],
-};
-
-export const imageDescriptions: Record<string, [string, string]> = {
-  render: [
-    "Muffin 的原生编辑界面，显示文档大纲、表格与 C++ 代码",
-    "Muffin's native editor with a document outline, table and C++ code",
-  ],
-  source: [
-    "Muffin 的 Markdown 源码视图，显示同一份文档",
-    "The same document in Muffin's Markdown source view",
-  ],
-  night: [
-    "Muffin 使用内置 Night 主题显示文档",
-    "Muffin displaying the document with the built-in Night theme",
-  ],
-  code: [
-    "Muffin 中可编辑的表格与带语法高亮的 C++ 代码块",
-    "An editable table and a syntax-highlighted C++ code block in Muffin",
-  ],
-  technical: [
-    "Muffin 原生渲染的 Mermaid 流程图与 LaTeX 公式",
-    "A Mermaid flowchart and LaTeX equation rendered natively in Muffin",
-  ],
+  downloadMenu: ["选择下载版本", "Choose a download"],
 };

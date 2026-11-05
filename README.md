@@ -44,13 +44,21 @@ npm run preview # 预览生产构建
 - `index.html`：页面结构、中文文案与产品功能。
 - `src/i18n.ts`：英文文案与双语无障碍标签。
 - `src/style.css`：页面字体、配色与产品展示布局。
-- `public/assets/`：Taste Skill 原始布局和交互资源，保留上游许可。
-- `public/screens/`：Muffin 桌面应用的真实截图及手机裁剪图。
-- `public/muffin-notes.md`：截图使用的公开示例文档。
+- `src/muffin-window.css`：按真实应用截图重建的窗口、菜单、侧栏与 README 排版。
+- `src/source-preview.ts`：源码行号与高亮、分栏同步滚动和模式切换的阅读位置保持。
+- `src/product-demo.css`：功能细节和大文件展示。
+- `public/assets/motion/`：Taste Skill 原始悬停与点击交互，保留上游许可。当前页面不加载旧版整屏布局资源。
+- `public/muffin-notes.md`：英文公开示例文档，包含表格、代码、流程图和公式。
 - `public/muffin.svg`：来自 Muffin 项目的原始 Logo。
-- `public/social.png`：分享卡片；可运行 `npm run social` 重新生成（需要 Python 与 Pillow）。
+- `public/social.png`：分享卡片；传入网页窗口裁切图，运行 `npm run social -- <window-crop.png>` 重新生成（需要 Python 与 Pillow）。
 
-编辑器区展示真实桌面截图，可切换编辑视图、Markdown 源码和 Night 主题。代码、Mermaid 与 LaTeX 区域同样取自应用的实际渲染。网页本身不提供文档编辑功能。
+编辑器区用 HTML/CSS 按真实截图重建 Muffin 的应用菜单、文件树、README 文档与状态栏，标题栏保留 macOS 风格。可切换文件/大纲、目录定位，以及切换编辑、源码、左右分栏和 Night 主题。源码包含行号、自动换行与语法颜色，分栏提供可开关的双向同步滚动，模式切换保持对应阅读位置。正文使用原项目 GitHub 主题的 Open Sans 字体；表格和代码是 HTML，流程图使用 SVG，公式使用 MathML。英文示例保持一致，网页没有移植桌面编辑引擎，也不加载产品截图。
+
+当前版式采用白底、窄幅介绍与浅绿色产品展示框。区块随内容自然展开，页头不固定；常见问题使用原生可展开条目，首屏下载箭头可选择系统，手机上同样可以直接切换语言。
+
+当前支持简体中文和英文；文案、无障碍标签及使用说明链接随语言切换，选择保存在浏览器中。产品窗口中的英文示例保持一致。组件与大文件文案的维护说明见 [product-demo.md](docs/product-demo.md)。
+
+首屏及独立介绍区重点说明原生 C++/Qt、大文件按需排版、增量更新及 1 GiB 混合 Markdown 测试。数字依据链接到 Muffin 仓库中的测试分析；没有把 Core 解析阶段时间当成 GUI 打开速度，也没有承诺秒开或固定内存占用。
 
 ### 下载入口
 
@@ -67,8 +75,8 @@ npm test
 npm run format:check
 ```
 
-测试覆盖桌面和手机尺寸、语言切换与记忆、截图切换及加载、手机导航、下载架构选择、GitHub 新版本更新、无效下载地址和离线回退。CI 在 `main` 推送和 Pull Request 时执行构建及浏览器测试。
+测试覆盖桌面和手机尺寸、语言切换与记忆、HTML 文档/源码/左右分栏切换、行号与长行、双向同步及独立滚动、阅读位置保持、Night 配色、公式与图表、零截图请求、FAQ 展开、下载菜单及键盘关闭、下载架构选择、GitHub 新版本更新、无效下载地址和离线回退。CI 在 `main` 推送和 Pull Request 时执行构建及浏览器测试。
 
 ## 许可
 
-[MIT](LICENSE)。Logo、产品截图与功能资料来自 [Muffin](https://github.com/jstzwj/Muffin)。布局资源来自 [Taste Skill](https://github.com/Leonxlnx/taste-skill)，许可见 `public/assets/LICENSE.txt`。Familjen Grotesk 字体遵循 `public/fonts/OFL.txt`。设计取舍见 [design-plan.md](docs/design-plan.md)，检查结果与例外见 [design-review.md](docs/design-review.md)。
+[MIT](LICENSE)。Logo、产品界面参考与功能资料来自 [Muffin](https://github.com/jstzwj/Muffin)。布局资源来自 [Taste Skill](https://github.com/Leonxlnx/taste-skill)，许可见 `public/assets/LICENSE.txt`。Familjen Grotesk 字体遵循 `public/fonts/OFL.txt`；Open Sans 遵循 `public/fonts/Open-Sans-Apache-2.0.txt`。设计取舍见 [design-plan.md](docs/design-plan.md)，检查结果与例外见 [design-review.md](docs/design-review.md)。

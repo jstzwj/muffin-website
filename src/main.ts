@@ -1,6 +1,9 @@
 import "./style.css";
-import { english, labels, imageDescriptions, type Language } from "./i18n";
+import "./product-demo.css";
+import "./muffin-window.css";
+import { english, labels, type Language } from "./i18n";
 import fallbackRelease from "./release.json";
+import { initializeSourcePreview } from "./source-preview";
 
 const $ = <T extends HTMLElement = HTMLElement>(selector: string) => {
   const element = document.querySelector<T>(selector);
@@ -13,36 +16,102 @@ document.querySelectorAll<HTMLElement>("[data-i18n]").forEach((element) => {
   chinese.set(element.dataset.i18n!, element.innerHTML);
 });
 
-type View = "render" | "source" | "night";
+type View = "render" | "source" | "split" | "night";
 let language: Language = "zh";
-let view: View = "source";
+let view: View = "render";
 let windowsArchitecture: "x64" | "arm64" = "x64";
 let currentRelease: Release = fallbackRelease;
+const editorPreview = initializeSourcePreview();
 
-function updateImageDescriptions() {
-  document.querySelectorAll<HTMLImageElement>("[data-alt]").forEach((image) => {
-    const key = image.id === "editor-image" ? view : image.dataset.alt!;
-    image.alt = imageDescriptions[key]?.[language === "zh" ? 0 : 1] ?? "Muffin";
-  });
+function setView(nextView: View) {
+  const position = editorPreview.capture(
+    view === "source" ? editorPreview.source : editorPreview.preview,
+  );
+  view = nextView;
+  $("#editor-screen").dataset.view = view;
+  $(".source-pane").hidden = view !== "source" && view !== "split";
+  $(".preview-pane").hidden = view === "source";
+  document
+    .querySelectorAll<HTMLElement>(".pane-header")
+    .forEach((header) => (header.hidden = view !== "split"));
+  for (const mode of ["render", "source", "split"]) {
+    $(`#demo-view-${mode}`).setAttribute(
+      "aria-pressed",
+      String(mode === (view === "night" ? "render" : view)),
+    );
+  }
+  if (view !== "source") editorPreview.restore(editorPreview.preview, position);
+  if (view === "source" || view === "split")
+    editorPreview.restore(editorPreview.source, position);
+  document
+    .querySelectorAll<HTMLButtonElement>("button[data-view]")
+    .forEach((button) => {
+      const selected = button.dataset.view === view;
+      button.classList.toggle("is-active", selected);
+      button.setAttribute("aria-pressed", String(selected));
+    });
 }
 
 document
   .querySelectorAll<HTMLButtonElement>("button[data-view]")
   .forEach((button) => {
+    button.addEventListener("click", () =>
+      setView(button.dataset.view as View),
+    );
+  });
+
+for (const mode of ["render", "source", "split"] as const) {
+  $(`#demo-view-${mode}`).addEventListener("click", () => setView(mode));
+}
+
+const sidebarTabs = [
+  ...document.querySelectorAll<HTMLButtonElement>("[data-sidebar]"),
+];
+function selectSidebar(tab: HTMLButtonElement) {
+  sidebarTabs.forEach((button) => {
+    const selected = button === tab;
+    button.setAttribute("aria-selected", String(selected));
+    button.tabIndex = selected ? 0 : -1;
+    $(`#demo-${button.dataset.sidebar}`).hidden = !selected;
+  });
+  $(".sidebar-toolbar").hidden = tab.dataset.sidebar === "outline";
+}
+sidebarTabs.forEach((tab, index) => {
+  tab.addEventListener("click", () => selectSidebar(tab));
+  tab.addEventListener("keydown", (event) => {
+    const next =
+      event.key === "ArrowRight" || event.key === "ArrowLeft"
+        ? sidebarTabs[1 - index]
+        : event.key === "Home"
+          ? sidebarTabs[0]
+          : event.key === "End"
+            ? sidebarTabs[1]
+            : null;
+    if (!next) return;
+    event.preventDefault();
+    selectSidebar(next);
+    next.focus();
+  });
+});
+document
+  .querySelectorAll<HTMLButtonElement>("[data-document-heading]")
+  .forEach((button) => {
     button.addEventListener("click", () => {
-      view = button.dataset.view as View;
-      $("#editor-screen").dataset.view = view;
-      $<HTMLImageElement>("#editor-image").src = `/screens/${view}.webp`;
-      document.querySelector<HTMLSourceElement>(
-        "#editor-mobile-image",
-      )!.srcset = `/screens/${view}-mobile.webp`;
-      document.querySelectorAll("button[data-view]").forEach((item) => {
-        item.classList.toggle("is-active", item === button);
-        item.setAttribute("aria-pressed", String(item === button));
-      });
-      updateImageDescriptions();
+      if (view === "source") setView("render");
+      const viewport = $(".window-document");
+      const heading = $(`#${button.dataset.documentHeading}`);
+      viewport.scrollTop +=
+        heading.getBoundingClientRect().top -
+        viewport.getBoundingClientRect().top -
+        20;
     });
   });
+const words = [
+  ...new Intl.Segmenter("en", { granularity: "word" }).segment(
+    $("#demo-render").textContent ?? "",
+  ),
+].filter((segment) => segment.isWordLike).length;
+$("#demo-word-count").textContent = `${words} words⌄`;
 
 document
   .querySelectorAll<HTMLButtonElement>("[data-architecture]")
@@ -94,18 +163,41 @@ function setLanguage(nextLanguage: Language) {
     "content",
     language === "zh" ? "zh_CN" : "en_US",
   );
+  document
+    .querySelectorAll<HTMLAnchorElement>("[data-documentation]")
+    .forEach((link) => {
+      link.href = `https://github.com/jstzwj/Muffin/blob/main/${language === "zh" ? "README.zh.md" : "README.md"}`;
+    });
   try {
     localStorage.setItem("muffin-language", language);
   } catch {
     /* Storage is optional. */
   }
-  updateImageDescriptions();
   applyRelease(currentRelease);
 }
 
 $("#language-toggle").addEventListener("click", () =>
   setLanguage(language === "zh" ? "en" : "zh"),
 );
+
+const downloadPicker =
+  document.querySelector<HTMLDetailsElement>(".download-picker")!;
+document.addEventListener("click", (event) => {
+  if (!(event.target instanceof Node) || !downloadPicker.contains(event.target))
+    downloadPicker.open = false;
+});
+downloadPicker.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && downloadPicker.open) {
+    event.preventDefault();
+    downloadPicker.open = false;
+    downloadPicker.querySelector("summary")!.focus();
+  }
+});
+downloadPicker.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", () => {
+    downloadPicker.open = false;
+  });
+});
 
 interface Release {
   tag_name: string;
@@ -140,9 +232,16 @@ function applyRelease(release: Release) {
   };
   Object.entries(platforms).forEach(([platform, pattern]) => {
     const asset = release.assets.find((item) => pattern.test(item.name));
-    $<HTMLAnchorElement>(`#download-${platform}`).href =
-      asset?.browser_download_url ??
-      "https://github.com/jstzwj/Muffin/releases/latest";
+    document
+      .querySelectorAll<HTMLAnchorElement>(`[data-download="${platform}"]`)
+      .forEach((link) => {
+        link.href =
+          asset?.browser_download_url ??
+          "https://github.com/jstzwj/Muffin/releases/latest";
+      });
+  });
+  document.querySelectorAll("[data-windows-architecture]").forEach((label) => {
+    label.textContent = windowsArchitecture === "arm64" ? "ARM64" : "x64";
   });
   $("#release-version").textContent =
     `${release.tag_name} · ${language === "zh" ? "发行说明" : "Release notes"}`;

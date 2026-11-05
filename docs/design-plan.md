@@ -1,17 +1,18 @@
-Software / Muffin desktop Markdown editor.
+Software / Muffin native desktop Markdown editor.
 
-Taste Skill 2.5: stone-blueprint palette, Familjen Grotesk, centred hero, nav-mega, footer-dark, close-type, surface-pairs, tonal buttons. Existing Muffin SVG replaces the dealt mark. No stock photography or invented product UI.
+User-directed design: white canvas, narrow introduction, sage product stage, compact typography, black pill actions and a light footer. Familjen Grotesk and the original Muffin logo. The Otty reference informs proportions and whitespace, not code, copy or assets. The user now explicitly requests HTML product reconstructions instead of screenshots.
 
-1. Hero: name the category and desktop platforms; actual Muffin editor capture; 1 screen.
-2. Editor: rendered/source/Night views, switched by the visitor; actual product window; 1 screen.
-3. Document content: native code, Mermaid and LaTeX; two detail captures from the same supplied Markdown document; 1 screen, 2 on phones if required by readable type.
-4. File, export and theme questions: four open answers grounded in the project README; 1 screen.
-5. Closing footer: platform downloads, architecture selector, source and issue links; 1 screen at 390×844, content height on shorter phone viewports.
+1. Introduction: native desktop category, large-document use case, 1 GiB evidence, download and docs.
+2. Product stage: reconstruct the user's actual Muffin screenshots, not a generic editor. Preserve its application menu, 22.7% file sidebar, Files/Outline tabs, toolbar, project tree, centered README logo, vertical project badges and status controls. Use the real GitHub theme's Open Sans files and license. Only the titlebar keeps macOS traffic lights. Files/Outline, keyboard tabs and outline jumps work. The three status icons select document, source and split views; the circular icon is not a sidebar toggle. Source has logical line numbers, wrapping and the original syntax palette. Split view shows equal left source/right read-only preview panes, headers and a working scroll-sync button. Paired document anchors keep scrolling and mode changes aligned. Phone split view hides the file tree to preserve pane width, restoring it in other views. Night remains available. English README introduction followed by formatting examples. Scroll the document, not the whole stage. No screenshot dependency, automatic carousel or fade mask.
+3. Large documents: lead with the documented 1 GiB mixed-Markdown test. A file summary shows its byte and line counts. Describe on-demand layout and incremental processing, link the actual evidence, identify the Windows measurement environment. Do not promise instant opening or a universal memory footprint. Three brief explanations cover native C++/Qt, direct editing and portable local files.
+4. Formatting: SVG workflow beside concise copy, then HTML table/code/theme fragments and native MathML. Phone fragments stack at readable sizes. No product-image requests.
+5. Questions: existing documents, export/Pandoc, CSS themes and licensing. Native disclosure controls.
+6. Downloads and footer: existing verified platform assets, architecture selection, release updates, bilingual copy and documentation links.
 
-Copy first: category names and observable behavior; no poetry, numbered benefits, all-caps labels, fictional quotes or unmeasured performance claims. Source: `G:/github/Muffin/README.zh.md` and the actual installed app.
+The user's visual reference supersedes exact whole-screen sections, random palettes, giant headings and a fixed navigation. The request for HTML reconstruction supersedes the earlier plan to collect Mac screenshots. Screens, CSS/MathML and components use one restrained system. Original Taste Skill hover/press assets remain unchanged; no vendor or checker file is edited to suppress findings.
 
-The page keeps the skill's original system, layout and hover assets. We intentionally omit autonomous shaders, decorative scroll scenes and a cursor spotlight: those do not help assess a local Markdown editor, and the user asked to remove the generated landing-page feel. All view changes require a click; every initial view is present without JavaScript.
+Product facts come from `G:/github/Muffin/README.zh.md`. The 1 GiB claim is grounded in `docs/benchmarks/large-document-open-analysis-2026-10-18.md` in that repository: an actual mixed file, historical GUI opening, and separate Core-stage measurements. These are distinct measurements, not a macOS performance result.
 
-Product captures are made with the Computer Use skill, showing only `public/muffin-notes.md`. Screenshot crops are presentation assets, not recreated app chrome. The existing public README tabs may appear in the full application capture; no private document contents are used.
+English examples live in the HTML and `public/muffin-notes.md`, with the opening introduction from Muffin's English README. The page renders without bitmap product assets. Only the original SVG identity and local fonts are loaded; the static PNG social card is not a homepage resource. That card now uses a crop of the faithful HTML window rather than an independent drawing of a different UI. Prior captures are archived locally under ignored `.taste-skill/retired-product-screens/` and removed from public deployment.
 
-Audit outputs and browser profiles live in ignored `.taste-skill/`. Browser validation uses the installed skill's consistency, layout, shoot and performance scripts. Functional regression tests remain in Playwright.
+Functional verification applies the production CSP on desktop and mobile. Visual checks use Taste Skill's original tools sequentially at 1440, 1024, 820, 768 and 390. The latest source/split reports are ignored under `.taste-skill/source-split/`; previous reports remain in `.taste-skill/faithful-window/` and `.taste-skill/html-demo/`. Development remains at `http://127.0.0.1:5173/`.

@@ -1,19 +1,19 @@
-# Muffin 开发笔记
+# Muffin development notes
 
-用 Markdown 整理项目文档、代码片段和发布计划。
+Project documentation, code snippets and release plans in one Markdown file.
 
-## 编辑器
+## Editor
 
-直接在页面上编辑，或切换到 Markdown 源码。文档保存为本地 `.md` 文件。
+Edit the formatted document or switch to Markdown source. Save your work as a local `.md` file.
 
-| 内容           | 支持     |
-| -------------- | -------- |
-| 表格与任务列表 | 直接编辑 |
-| 代码块         | 语法高亮 |
-| 数学公式       | LaTeX    |
-| 图表           | Mermaid  |
+| Content          | Support             |
+| ---------------- | ------------------- |
+| Tables and tasks | Direct editing      |
+| Code blocks      | Syntax highlighting |
+| Equations        | LaTeX               |
+| Diagrams         | Mermaid             |
 
-## 构建
+## Build
 
 ```cpp
 #include <iostream>
@@ -24,16 +24,16 @@ int main() {
 }
 ```
 
-## 发布流程
+## Release workflow
 
 ```mermaid
 flowchart LR
-    A[编写文档] --> B[检查内容]
-    B --> C[导出 PDF]
-    B --> D[保存 Markdown]
+    A[Write] --> B[Review]
+    B --> C[Export PDF]
+    B --> D[Save Markdown]
 ```
 
-## 数学公式
+## Equations
 
 $$
 e^{i\pi} + 1 = 0
