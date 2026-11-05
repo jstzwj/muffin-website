@@ -2,118 +2,84 @@ export type Language = "zh" | "en";
 
 export const english: Record<string, string> = {
   skip: "Skip to content",
+  navEditor: "Editor",
   navFeatures: "Features",
-  navThemes: "Themes",
-  navDownload: "Download",
-  heroBadge: "A Markdown editor made for the joy of writing",
-  heroLine1: "A little space.",
-  heroLine2: "A lot of possibility.",
-  heroDescription:
-    'Native, lightweight, and what you see is what you write.<br class="desktop-break" /> The simplicity of Markdown. The ease of a fresh page.',
-  heroDownload: "Get Muffin for free",
-  heroSource: "Explore on GitHub",
-  heroFree: "Free & open source",
-  demoAnnotation: "A little room for your next idea",
-  demoFile: "a-little-inspiration.md",
-  demoLabel: "INTERACTIVE DEMO",
-  sidebarTitle: "My writing",
-  sampleWelcome: "a-little-inspiration.md",
-  sampleNotes: "project-notes.md",
-  sampleWriting: "writing-checklist.md",
-  outline: "OUTLINE",
-  sidebarFooter: "Give your ideas room to grow",
-  preview: "Preview",
-  characters: "characters",
-  demoCaption:
-    "Try editing the Markdown or pick a color. This is a web demo; download the desktop app for the full editing experience.",
-  principleNative: "Built with C++ / Qt",
-  principleLive: "True WYSIWYG editing",
-  principleFiles: "Your files stay yours",
-  principleLanguages: "15 interface languages",
-  featureEyebrow: "LESS FRICTION. MORE FLOW.",
-  featureTitle: "Writing should feel this simple.",
-  featureIntro:
-    "From a fleeting thought to a carefully crafted story.<br />You bring the words. Muffin takes care of the rest.",
-  liveLabel: "WRITE NATURALLY",
-  liveTitle: "See your words take shape.",
-  liveDescription:
-    "Headings, lists, and quotes come to life as you type. Edit right on the rendered page, or switch to Markdown source with your cursor right where you left it.",
-  liveTag1: "Live rendering",
-  liveTag2: "Synced source",
-  liveTag3: "Focus mode",
-  illustrationHeading: "Put it into words",
-  illustrationBold: "Every good story",
-  illustrationText: "starts with a small idea.",
-  nativeLabel: "NATIVELY LIGHT",
-  nativeTitle: "Less overhead. More flow.",
-  nativeDescription:
-    "Built in C++ and Qt 6, with viewport-aware layout and incremental parsing. A lightweight desktop companion for everyday notes and longer documents.",
-  nativeFootnote: "Native desktop app · Incremental layout",
-  expressLabel: "EXPRESS MORE",
-  expressTitle: "Ideas come in every shape.",
-  expressDescription:
-    "Editable tables, highlighted code blocks, LaTeX math, and native Mermaid diagrams bring clarity to even your most technical documents.",
-  filesLabel: "MAKE IT YOURS",
-  filesTitle: "Start local. Go anywhere.",
-  filesDescription:
-    "Write offline and save as plain .md files. Export to PDF, HTML, or PNG natively. Install Pandoc to unlock more document formats.",
-  filesFootnote: "Local files · Open formats · MIT licensed",
-  themeEyebrow: "A SPACE THAT FEELS LIKE YOU.",
-  themeTitle: "Your words.<br />Your atmosphere.",
-  themeDescription:
-    "Soft paper tones in the morning. A quiet dark palette after hours. Five built-in themes bring your document and interface into harmony.",
-  themeNote:
-    "Make your own theme with CSS, too. Colors shown here are web illustrations.",
-  paperDate: "A NOTE TO EVERY NEW BEGINNING",
-  paperTitle: "Find poetry in the everyday.",
-  paperText:
-    "A cup of coffee. An open window. A wandering thought.<br />Leave a little space for today’s story to unfold.",
-  paperQuote:
-    "You don’t need all the answers.<br />Putting it into words is a lovely start.",
-  detailsEyebrow: "LITTLE THINGS. THOUGHTFULLY MADE.",
-  detailsTitle: "Small details that keep you writing.",
-  detailFocus: "Stay in your flow",
-  detailFocusText:
-    "Focus and typewriter modes keep your attention on the sentence in front of you.",
-  detailOrganize: "An idea, within reach",
-  detailOrganizeText:
-    "A file tree, document outline, and quick open keep your thoughts close at hand.",
-  detailRestore: "Pick up your last thought",
-  detailRestoreText:
-    "Session recovery, draft recovery, and optional autosave look after the work you put in.",
-  detailSpell: "Find the right words",
-  detailSpellText:
-    "Built-in spell checking and multilingual dictionaries give every sentence a little extra care.",
-  downloadEyebrow: "YOUR NEXT PAGE STARTS HERE.",
-  downloadTitle: "Your next page starts here.",
-  downloadIntro:
-    "Free, open source, and ready when you are. Make a quiet space for writing on your desktop.",
-  windowsSubtitle: "Installer & portable editions",
-  linuxSubtitle: "For your Linux desktop",
-  downloadWindows: "Get Muffin for Windows",
-  downloadMac: "Get Muffin for macOS",
-  downloadLinux: "Get Muffin for Linux",
-  viewReleases: "View releases",
-  allDownloads: "All versions, architectures & release notes",
-  openSourceText:
-    "Made for people who love to write. Built with people who love to create.",
-  openSourceLink: "Be part of Muffin on GitHub ↗",
-  footerTagline: "A little space for your words.",
+  navQuestions: "FAQ",
+  menuEditing: "Editing",
+  menuViews: "Document and source views",
+  menuContents: "Document content",
+  menuBlocks: "Code, diagrams and equations",
+  menuFiles: "Files and export",
+  menuFormats: "Markdown and other formats",
+  download: "Download Muffin",
+  source: "View source",
+  heroNotice: "Muffin · Windows / macOS / Linux",
+  heroTitle: "A native desktop<br />Markdown editor.",
+  heroLead:
+    'Built with C++ and Qt 6. Edit the formatted document,<br class="desktop-break" /> switch to source, and save ordinary .md files.',
+  editorTitle: "Edit the document.<br />Or edit its source.",
+  editorText:
+    "Change headings, tables and code blocks directly on the page. Your cursor and reading position stay in sync when you switch to source.",
+  renderView: "Document view",
+  sourceView: "Markdown source",
+  nightView: "Night theme",
+  featuresTitle: "Code, diagrams and equations.<br />In one Markdown file.",
+  codeTitle: "Edit code and tables",
+  codeText:
+    "Syntax highlighting for code blocks. Add and remove table rows and columns directly.",
+  technicalTitle: "Write equations and flowcharts",
+  technicalText: "Native rendering for LaTeX math and Mermaid diagrams.",
+  questionsTitle: "Files, export and themes.",
+  questionFiles: "Where are documents stored?",
+  answerFiles:
+    "Locally, as .md files. Edit offline and open the same files in other Markdown tools.",
+  questionExport: "Which formats can I export?",
+  answerExport:
+    "Export PDF, HTML and PNG natively. Word, EPUB and other formats require a separate Pandoc installation.",
+  questionThemes: "Can I change the theme?",
+  answerThemes:
+    "Choose GitHub, Newsprint, Night, Pixyll or Whitey, or import your own CSS theme.",
+  questionLicense: "Does it cost anything?",
+  answerLicense:
+    "Muffin is free, with source code under the MIT license. Report issues and follow development on GitHub.",
+  downloadTitle: "Download Muffin.",
+  downloadText:
+    "Choose your system and architecture. Installers are hosted on GitHub Releases.",
+  downloadWindows: "Download MSI installer ↗",
+  downloadMac: "Download DMG installer ↗",
+  downloadLinux: "Download Linux archive ↗",
+  releaseNotes: "Release notes",
+  allDownloads: "Other versions and portable builds ↗",
   license: "MIT license",
-  feedback: "Feedback & ideas",
+  issues: "Report an issue ↗",
 };
 
 export const labels: Record<string, [string, string]> = {
-  documentArea: ["文档内容", "Document content"],
   navigation: ["主导航", "Main navigation"],
-  demoSection: ["Markdown 交互预览", "Interactive Markdown demo"],
-  demoSidebar: ["示例文稿", "Sample documents"],
-  samples: ["选择示例", "Choose a sample"],
-  viewMode: ["预览模式", "Preview mode"],
-  previewThemes: ["预览主题", "Preview theme"],
-  markdownPreview: ["Markdown 预览", "Markdown preview"],
-  markdownSource: ["编辑 Markdown", "Edit Markdown"],
-  principles: ["产品特点", "Product highlights"],
-  chooseTheme: ["选择主题", "Choose a theme"],
+  menu: ["菜单", "Menu"],
+  views: ["查看编辑器界面", "Editor views"],
   architecture: ["Windows 架构", "Windows architecture"],
+};
+
+export const imageDescriptions: Record<string, [string, string]> = {
+  render: [
+    "Muffin 的原生编辑界面，显示文档大纲、表格与 C++ 代码",
+    "Muffin's native editor with a document outline, table and C++ code",
+  ],
+  source: [
+    "Muffin 的 Markdown 源码视图，显示同一份文档",
+    "The same document in Muffin's Markdown source view",
+  ],
+  night: [
+    "Muffin 使用内置 Night 主题显示文档",
+    "Muffin displaying the document with the built-in Night theme",
+  ],
+  code: [
+    "Muffin 中可编辑的表格与带语法高亮的 C++ 代码块",
+    "An editable table and a syntax-highlighted C++ code block in Muffin",
+  ],
+  technical: [
+    "Muffin 原生渲染的 Mermaid 流程图与 LaTeX 公式",
+    "A Mermaid flowchart and LaTeX equation rendered natively in Muffin",
+  ],
 };

@@ -1,8 +1,5 @@
 import "./style.css";
-import DOMPurify from "dompurify";
-import { Marked } from "marked";
-import { english, labels, type Language } from "./i18n";
-import { samples, type Sample } from "./samples";
+import { english, labels, imageDescriptions, type Language } from "./i18n";
 import fallbackRelease from "./release.json";
 
 const $ = <T extends HTMLElement = HTMLElement>(selector: string) => {
@@ -11,184 +8,39 @@ const $ = <T extends HTMLElement = HTMLElement>(selector: string) => {
   return element;
 };
 
-const source = $<HTMLTextAreaElement>("#markdown-source");
-const preview = $("#markdown-preview");
-const outline = $("#outline");
-const previewButton = $<HTMLButtonElement>("#preview-mode");
-const sourceButton = $<HTMLButtonElement>("#source-mode");
-const languageButton = $<HTMLButtonElement>("#language-toggle");
 const chinese = new Map<string, string>();
 document.querySelectorAll<HTMLElement>("[data-i18n]").forEach((element) => {
   chinese.set(element.dataset.i18n!, element.innerHTML);
 });
 
+type View = "render" | "source" | "night";
 let language: Language = "zh";
-let sample: Sample = "welcome";
-let mode: "preview" | "source" = "preview";
-let currentRelease: Release = fallbackRelease;
+let view: View = "source";
 let windowsArchitecture: "x64" | "arm64" = "x64";
-const drafts = structuredClone(samples);
+let currentRelease: Release = fallbackRelease;
 
-const markdown = new Marked({
-  gfm: true,
-  renderer: {
-    checkbox({ checked }) {
-      return `<span class="task-marker" aria-hidden="true">${checked ? "☑" : "☐"}</span> `;
-    },
-  },
-});
-
-function renderMarkdown() {
-  const rawHtml = markdown.parse(source.value, { async: false });
-  preview.innerHTML = DOMPurify.sanitize(rawHtml, {
-    ALLOWED_TAGS: [
-      "p",
-      "br",
-      "h1",
-      "h2",
-      "h3",
-      "h4",
-      "h5",
-      "h6",
-      "strong",
-      "em",
-      "del",
-      "blockquote",
-      "ul",
-      "ol",
-      "li",
-      "pre",
-      "code",
-      "a",
-      "hr",
-      "table",
-      "thead",
-      "tbody",
-      "tr",
-      "th",
-      "td",
-      "span",
-    ],
-    ALLOWED_ATTR: ["href", "title", "class", "aria-hidden", "align"],
-    ALLOW_DATA_ATTR: false,
+function updateImageDescriptions() {
+  document.querySelectorAll<HTMLImageElement>("[data-alt]").forEach((image) => {
+    const key = image.id === "editor-image" ? view : image.dataset.alt!;
+    image.alt = imageDescriptions[key]?.[language === "zh" ? 0 : 1] ?? "Muffin";
   });
-  // Local fragments and safe web/mail links only. Demo content cannot load remote media.
-  preview.querySelectorAll<HTMLAnchorElement>("a").forEach((link) => {
-    const href = link.getAttribute("href") ?? "";
-    if (href.startsWith("#")) return;
-    try {
-      const url = new URL(href);
-      if (!["https:", "http:", "mailto:"].includes(url.protocol)) {
-        link.removeAttribute("href");
-      } else {
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
-      }
-    } catch {
-      link.removeAttribute("href");
-    }
-  });
-  outline.replaceChildren();
-  preview
-    .querySelectorAll<HTMLElement>("h1, h2, h3")
-    .forEach((heading, index) => {
-      heading.id = `demo-heading-${index}`;
-      const button = document.createElement("button");
-      button.type = "button";
-      button.textContent = heading.textContent;
-      button.addEventListener("click", () => {
-        setMode("preview");
-        // Scroll inside the demo without moving the surrounding page.
-        const scroller = $(".document-area");
-        scroller.scrollTo({
-          top: Math.max(0, heading.offsetTop - 25),
-          behavior: "smooth",
-        });
-      });
-      outline.append(button);
-    });
-  $("#word-count").textContent = String(Array.from(source.value).length);
 }
-
-function setMode(nextMode: typeof mode) {
-  mode = nextMode;
-  const isPreview = mode === "preview";
-  preview.hidden = !isPreview;
-  source.hidden = isPreview;
-  previewButton.classList.toggle("is-active", isPreview);
-  sourceButton.classList.toggle("is-active", !isPreview);
-  previewButton.setAttribute("aria-pressed", String(isPreview));
-  sourceButton.setAttribute("aria-pressed", String(!isPreview));
-  if (!isPreview) source.focus({ preventScroll: true });
-}
-
-function updateSample() {
-  $<HTMLSelectElement>("#mobile-sample").value = sample;
-  source.value = drafts[language][sample];
-  renderMarkdown();
-  document
-    .querySelectorAll<HTMLButtonElement>("[data-sample]")
-    .forEach((button) => {
-      const active = button.dataset.sample === sample;
-      button.classList.toggle("is-active", active);
-      button.setAttribute("aria-pressed", String(active));
-    });
-  const titleKeys = {
-    welcome: "sampleWelcome",
-    notes: "sampleNotes",
-    writing: "sampleWriting",
-  };
-  $('[data-i18n="demoFile"]').textContent =
-    language === "en"
-      ? english[titleKeys[sample]]
-      : chinese.get(titleKeys[sample])!;
-  $(".document-area").scrollTop = 0;
-}
-
-source.addEventListener("input", () => {
-  drafts[language][sample] = source.value;
-  renderMarkdown();
-});
-$<HTMLSelectElement>("#mobile-sample").addEventListener("change", (event) => {
-  sample = (event.currentTarget as HTMLSelectElement).value as Sample;
-  updateSample();
-});
-previewButton.addEventListener("click", () => setMode("preview"));
-sourceButton.addEventListener("click", () => setMode("source"));
-document
-  .querySelectorAll<HTMLButtonElement>("[data-sample]")
-  .forEach((button) => {
-    button.addEventListener("click", () => {
-      sample = button.dataset.sample as Sample;
-      updateSample();
-    });
-  });
 
 document
-  .querySelectorAll<HTMLButtonElement>(".demo-themes [data-theme]")
+  .querySelectorAll<HTMLButtonElement>("button[data-view]")
   .forEach((button) => {
     button.addEventListener("click", () => {
-      $("#editor-window").dataset.theme = button.dataset.theme;
-      $("#theme-name").textContent = button.getAttribute("aria-label");
-      document.querySelectorAll(".demo-themes button").forEach((item) => {
+      view = button.dataset.view as View;
+      $("#editor-screen").dataset.view = view;
+      $<HTMLImageElement>("#editor-image").src = `/screens/${view}.webp`;
+      document.querySelector<HTMLSourceElement>(
+        "#editor-mobile-image",
+      )!.srcset = `/screens/${view}-mobile.webp`;
+      document.querySelectorAll("button[data-view]").forEach((item) => {
         item.classList.toggle("is-active", item === button);
         item.setAttribute("aria-pressed", String(item === button));
       });
-    });
-  });
-
-document
-  .querySelectorAll<HTMLButtonElement>("[data-showcase-theme]")
-  .forEach((button) => {
-    button.addEventListener("click", () => {
-      $("#theme-paper").dataset.theme = button.dataset.showcaseTheme;
-      $("#showcase-theme-name").textContent = button
-        .textContent!.trim()
-        .toUpperCase();
-      document.querySelectorAll("[data-showcase-theme]").forEach((item) => {
-        item.classList.toggle("is-active", item === button);
-        item.setAttribute("aria-pressed", String(item === button));
-      });
+      updateImageDescriptions();
     });
   });
 
@@ -212,6 +64,7 @@ function setLanguage(nextLanguage: Language) {
   document.querySelectorAll<HTMLElement>("[data-i18n]").forEach((element) => {
     const key = element.dataset.i18n!;
     const value = language === "en" ? english[key] : chinese.get(key);
+    // Only bundled, trusted copy is inserted as markup (for intentional line breaks).
     if (value !== undefined) element.innerHTML = value;
   });
   document.querySelectorAll<HTMLElement>("[data-label]").forEach((element) => {
@@ -219,6 +72,7 @@ function setLanguage(nextLanguage: Language) {
     if (values)
       element.setAttribute("aria-label", values[language === "zh" ? 0 : 1]);
   });
+  const languageButton = $("#language-toggle");
   languageButton.querySelector("span")!.textContent =
     language === "zh" ? "EN" : "中文";
   languageButton.setAttribute(
@@ -227,12 +81,12 @@ function setLanguage(nextLanguage: Language) {
   );
   document.title =
     language === "zh"
-      ? "Muffin — 让灵感，自然成文。"
-      : "Muffin — A little space. A lot of possibility.";
+      ? "Muffin — 原生桌面 Markdown 编辑器"
+      : "Muffin — Native desktop Markdown editor";
   const description =
     language === "zh"
-      ? "Muffin 是一款免费开源的原生 Markdown 编辑器。所见即所得，支持数学公式、Mermaid 图表和多种主题，为 Windows、macOS 与 Linux 而生。"
-      : "Muffin is a free, open-source native Markdown editor. Enjoy WYSIWYG editing, math, Mermaid diagrams, and beautiful themes on Windows, macOS, and Linux.";
+      ? "Muffin 是免费开源的原生 Markdown 编辑器，以 C++ 和 Qt 6 构建。支持所见即所得编辑、源码模式、LaTeX 与 Mermaid，适用于 Windows、macOS 和 Linux。"
+      : "Muffin is a free, open-source native Markdown editor built with C++ and Qt 6. Edit documents and source, with LaTeX and Mermaid, on Windows, macOS and Linux.";
   $('meta[name="description"]').setAttribute("content", description);
   $('meta[property="og:title"]').setAttribute("content", document.title);
   $('meta[property="og:description"]').setAttribute("content", description);
@@ -245,11 +99,11 @@ function setLanguage(nextLanguage: Language) {
   } catch {
     /* Storage is optional. */
   }
-  updateSample();
+  updateImageDescriptions();
   applyRelease(currentRelease);
 }
 
-languageButton.addEventListener("click", () =>
+$("#language-toggle").addEventListener("click", () =>
   setLanguage(language === "zh" ? "en" : "zh"),
 );
 
@@ -286,14 +140,13 @@ function applyRelease(release: Release) {
   };
   Object.entries(platforms).forEach(([platform, pattern]) => {
     const asset = release.assets.find((item) => pattern.test(item.name));
-    const link = $<HTMLAnchorElement>(`#download-${platform}`);
-    link.href =
+    $<HTMLAnchorElement>(`#download-${platform}`).href =
       asset?.browser_download_url ??
       "https://github.com/jstzwj/Muffin/releases/latest";
   });
   $("#release-version").textContent =
     `${release.tag_name} · ${language === "zh" ? "发行说明" : "Release notes"}`;
-  $("#release-version").closest("a")!.href =
+  $<HTMLAnchorElement>("#release-notes").href =
     `https://github.com/jstzwj/Muffin/releases/tag/${encodeURIComponent(release.tag_name)}`;
 }
 
@@ -301,11 +154,11 @@ let savedLanguage: Language = "zh";
 try {
   if (localStorage.getItem("muffin-language") === "en") savedLanguage = "en";
 } catch {
-  /* Use Chinese by default. */
+  /* Default to Chinese. */
 }
 setLanguage(savedLanguage);
 
-// Ship known, verified links. Refresh them when GitHub is reachable; API failures stay unobtrusive.
+// Verified bundled links remain available when GitHub is offline or rate limited.
 fetch("https://api.github.com/repos/jstzwj/Muffin/releases/latest", {
   headers: { Accept: "application/vnd.github+json" },
   signal: AbortSignal.timeout(5000),
@@ -316,5 +169,5 @@ fetch("https://api.github.com/repos/jstzwj/Muffin/releases/latest", {
     if (isRelease(release)) applyRelease(release);
   })
   .catch(() => {
-    /* The bundled release remains available when offline or rate limited. */
+    /* Keep the bundled release. */
   });

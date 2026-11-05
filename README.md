@@ -43,14 +43,14 @@ npm run preview # 预览生产构建
 
 - `index.html`：页面结构、中文文案与产品功能。
 - `src/i18n.ts`：英文文案与双语无障碍标签。
-- `src/samples.ts`：三个中英双语 Markdown 示例。
-- `src/style.css`、`src/themes.css`：布局与网页示意配色。
+- `src/style.css`：页面字体、配色与产品展示布局。
+- `public/assets/`：Taste Skill 原始布局和交互资源，保留上游许可。
+- `public/screens/`：Muffin 桌面应用的真实截图及手机裁剪图。
+- `public/muffin-notes.md`：截图使用的公开示例文档。
 - `public/muffin.svg`：来自 Muffin 项目的原始 Logo。
-- `public/social.png`：分享卡片；可运行 `npm run social` 重新生成（先安装 Playwright Chromium）。
+- `public/social.png`：分享卡片；可运行 `npm run social` 重新生成（需要 Python 与 Pillow）。
 
-网页中的编辑器是明确标注的交互演示，不是桌面应用截图。可切换源码/预览、修改 Markdown、更换示例与配色。五种主题区块是网页配色示意，桌面应用以实际主题为准。演示内容仅保存在内存中，刷新会重置，不会上传。
-
-Markdown 经 `marked` 解析并由 DOMPurify 清理。演示不加载用户输入的远程图片，也不渲染 LaTeX 或 Mermaid；对应完整能力由桌面应用提供。
+编辑器区展示真实桌面截图，可切换编辑视图、Markdown 源码和 Night 主题。代码、Mermaid 与 LaTeX 区域同样取自应用的实际渲染。网页本身不提供文档编辑功能。
 
 ### 下载入口
 
@@ -67,8 +67,8 @@ npm test
 npm run format:check
 ```
 
-测试覆盖桌面和手机尺寸、语言切换与记忆、主题切换、Markdown 编辑与清理、下载架构选择、GitHub 新版本更新和离线回退。CI 在 `main` 推送和 Pull Request 时执行构建及浏览器测试。
+测试覆盖桌面和手机尺寸、语言切换与记忆、截图切换及加载、手机导航、下载架构选择、GitHub 新版本更新、无效下载地址和离线回退。CI 在 `main` 推送和 Pull Request 时执行构建及浏览器测试。
 
 ## 许可
 
-[MIT](LICENSE)。Logo 与产品文案基于 [Muffin](https://github.com/jstzwj/Muffin)。
+[MIT](LICENSE)。Logo、产品截图与功能资料来自 [Muffin](https://github.com/jstzwj/Muffin)。布局资源来自 [Taste Skill](https://github.com/Leonxlnx/taste-skill)，许可见 `public/assets/LICENSE.txt`。Familjen Grotesk 字体遵循 `public/fonts/OFL.txt`。设计取舍见 [design-plan.md](docs/design-plan.md)，检查结果与例外见 [design-review.md](docs/design-review.md)。

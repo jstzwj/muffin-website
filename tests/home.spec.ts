@@ -8,7 +8,6 @@ const csp = readFileSync("public/_headers", "utf8")
   .trim();
 
 test.beforeEach(async ({ page }) => {
-  // Apply the same CSP as Cloudflare Pages while testing the built static site.
   await page.route("http://127.0.0.1:4173/**", async (route) => {
     const response = await route.fetch();
     await route.fulfill({
@@ -16,11 +15,10 @@ test.beforeEach(async ({ page }) => {
       headers: { ...response.headers(), "content-security-policy": csp },
     });
   });
-  // Deterministic offline fallback, also covering GitHub rate limits and network errors.
   await page.route("https://api.github.com/**", (route) => route.abort());
 });
 
-test("page, languages, themes, and downloads work at each screen size", async ({
+test("real product views, bilingual copy and downloads work with the production CSP", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -30,10 +28,32 @@ test("page, languages, themes, and downloads work at each screen size", async ({
       errors.push(message.text());
   });
   await page.goto("/");
-  await expect(page.locator("#hero-title")).toContainText("自然成文");
-  await expect(page.locator("#markdown-preview h1")).toHaveText(
-    "好想法，值得被写下来。",
-  );
+  await expect(page.locator("#hero-title")).toContainText("Markdown 编辑器");
+  for (const view of ["source", "night", "render"]) {
+    await page.locator(`button[data-view="${view}"]`).click();
+    await expect(page.locator("#editor-screen")).toHaveAttribute(
+      "data-view",
+      view,
+    );
+    await expect(page.locator("#editor-image")).toHaveAttribute(
+      "src",
+      `/screens/${view}.webp`,
+    );
+    await expect(page.locator(`button[data-view="${view}"]`)).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    await expect
+      .poll(() =>
+        page
+          .locator("#editor-image")
+          .evaluate(
+            (image: HTMLImageElement) =>
+              image.complete && image.naturalWidth > 0,
+          ),
+      )
+      .toBeTruthy();
+  }
   await expect(page.locator("#download-windows")).toHaveAttribute(
     "href",
     /v0\.7\.12.*windows-x64\.msi$/,
@@ -51,82 +71,83 @@ test("page, languages, themes, and downloads work at each screen size", async ({
     "href",
     /linux-x64\.tar\.gz$/,
   );
-  await page
-    .getByRole("button", { name: "Night", exact: true })
-    .first()
-    .click();
-  await expect(page.locator("#editor-window")).toHaveAttribute(
-    "data-theme",
-    "night",
-  );
-  await page.getByRole("button", { name: "Pixyll", exact: true }).click();
-  await expect(page.locator("#theme-paper")).toHaveAttribute(
-    "data-theme",
-    "pixyll",
-  );
+  const menu = page.locator(".nav__toggle");
+  if (await menu.isVisible()) await menu.click();
   await page.getByRole("button", { name: "Switch to English" }).click();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
-  await expect(page.locator("#hero-title")).toContainText("A little space.");
-  await expect(page.locator("#markdown-preview h1")).toHaveText(
-    "Good ideas deserve a page.",
-  );
+  await expect(page.locator("#hero-title")).toContainText("A native desktop");
   await expect(page.locator("#release-version")).toHaveText(
     "v0.7.12 · Release notes",
   );
+  // English download copy must fit too; it is longer than the Chinese version.
   expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= window.innerWidth,
-    ),
-  ).toBeTruthy();
+    await page.locator("#download").evaluate((footer) => {
+      const action = footer
+        .querySelector(".closing__cta > .btn")!
+        .getBoundingClientRect();
+      const platforms = footer
+        .querySelector(".platform-grid")!
+        .getBoundingClientRect();
+      const legal = footer
+        .querySelector(".footer__legal")!
+        .getBoundingClientRect();
+      return {
+        actionOverlapsPlatforms: action.bottom > platforms.top,
+        overlap: Math.round(Math.max(0, action.bottom - platforms.top)),
+        legalOverflowsFooter:
+          legal.bottom > footer.getBoundingClientRect().bottom,
+      };
+    }),
+  ).toEqual({
+    actionOverlapsPlatforms: false,
+    legalOverflowsFooter: false,
+    overlap: 0,
+  });
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  if (await menu.isVisible()) await menu.click();
   await page.getByRole("button", { name: "切换到简体中文" }).click();
+  if (await menu.isVisible()) await menu.click();
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth,
     ),
   ).toBeTruthy();
+  // Every lazy screenshot must load when brought into view.
+  for (const image of await page.locator("main img").all()) {
+    await image.scrollIntoViewIfNeeded();
+    await expect
+      .poll(() =>
+        image.evaluate(
+          (element: HTMLImageElement) =>
+            element.complete && element.naturalWidth > 0,
+        ),
+      )
+      .toBeTruthy();
+  }
   expect(errors).toEqual([]);
 });
 
-test("Markdown edits survive mode changes and unsafe markup is removed", async ({
-  page,
-}) => {
+test("navigation links remain usable on touch screens", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Markdown", exact: true }).click();
-  const input = page.getByRole("textbox", { name: "编辑 Markdown" });
-  await input.fill(
-    '# 我的第一句\n\n**灵感**来了。\n\n<script>window.hacked=true</script>\n<img src=x onerror="window.hacked=true">\n\n[不安全链接](javascript:alert(1))\n\n[文档](https://example.com)',
-  );
-  await page.getByRole("button", { name: "预览", exact: true }).click();
-  await expect(page.locator("#markdown-preview h1")).toHaveText("我的第一句");
-  await expect(page.locator("#markdown-preview strong")).toHaveText("灵感");
-  await expect(
-    page.locator("#markdown-preview script, #markdown-preview img"),
-  ).toHaveCount(0);
-  expect(await page.evaluate(() => "hacked" in window)).toBeFalsy();
-  await expect(page.locator("#markdown-preview a").first()).not.toHaveAttribute(
-    "href",
-  );
-  await expect(page.locator("#markdown-preview a").last()).toHaveAttribute(
-    "rel",
-    "noopener noreferrer",
-  );
-  await page.getByRole("button", { name: "Markdown", exact: true }).click();
-  await expect(input).toHaveValue(/# 我的第一句/);
-  if (await page.locator("#mobile-sample").isVisible()) {
-    await page.locator("#mobile-sample").selectOption("notes");
-    await expect(input).toHaveValue(/# 项目笔记/);
-    await page.locator("#mobile-sample").selectOption("welcome");
+  const toggle = page.locator(".nav__toggle");
+  if (await toggle.isVisible()) {
+    await toggle.click();
+    await expect(toggle).toHaveAttribute("aria-expanded", "true");
+    await page
+      .locator('.nav__links > .nav__item > a[href="#questions"]')
+      .click();
+    await expect(toggle).toHaveAttribute("aria-expanded", "false");
+    await expect(page.locator("body")).not.toHaveClass(/nav-locked/);
   } else {
-    await page.locator('[data-sample="notes"]').click();
-    await expect(input).toHaveValue(/# 项目笔记/);
-    await page.locator('[data-sample="welcome"]').click();
+    await page
+      .locator('.nav__links > .nav__item > a[href="#questions"]')
+      .click();
   }
-  await expect(input).toHaveValue(/# 我的第一句/);
+  await expect(page).toHaveURL(/#questions$/);
 });
 
-test("a newer GitHub release updates the matching platform assets", async ({
+test("a newer release updates matching assets and missing platforms use the release page", async ({
   page,
 }) => {
   await page.route("https://api.github.com/**", (route) =>
@@ -154,5 +175,28 @@ test("a newer GitHub release updates the matching platform assets", async ({
   await expect(page.locator("#download-macos")).toHaveAttribute(
     "href",
     "https://github.com/jstzwj/Muffin/releases/latest",
+  );
+});
+
+test("untrusted release links do not replace the bundled downloads", async ({
+  page,
+}) => {
+  await page.route("https://api.github.com/**", (route) =>
+    route.fulfill({
+      json: {
+        tag_name: "v0.8.0",
+        assets: [
+          {
+            name: "windows-x64.msi",
+            browser_download_url: "https://example.com/installer.msi",
+          },
+        ],
+      },
+    }),
+  );
+  await page.goto("/");
+  await expect(page.locator("#download-windows")).toHaveAttribute(
+    "href",
+    /v0\.7\.12.*windows-x64\.msi$/,
   );
 });
