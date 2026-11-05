@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f8f7f3" />
+    <meta
+      name="description"
+      content="Muffin 是一款免费开源的原生 Markdown 编辑器。所见即所得，支持数学公式、Mermaid 图表和多种主题，为 Windows、macOS 与 Linux 而生。"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Muffin — 让灵感，自然成文。" />
+    <meta
+      property="og:description"
+      content="原生、轻盈、所见即所得的 Markdown 编辑器。免费开源，让写作回归专注。"
+    />
+    <meta property="og:image" content="/social.png" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="color-scheme" content="light" />
+    <link rel="icon" type="image/svg+xml" href="/muffin.svg" />
+    <title>Muffin — 让灵感，自然成文。</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main" data-i18n="skip">跳到正文</a>
+    <header class="site-header">
+      <div class="container nav-row">
+        <a class="brand" href="#" aria-label="Muffin"
+          ><img src="/muffin.svg" width="38" height="38" alt="" /><span
+            >Muffin<span class="brand-dot">.</span></span
+          ></a
+        >
+        <nav class="main-nav" aria-label="主导航" data-label="navigation">
+          <a href="#features" data-i18n="navFeatures">功能</a>
+          <a href="#themes" data-i18n="navThemes">主题</a>
+          <a href="#download" data-i18n="navDownload">下载</a>
+          <a
+            href="https://github.com/jstzwj/Muffin"
+            class="nav-github"
+            aria-label="GitHub"
+            ><svg class="icon" aria-hidden="true"><use href="#i-github" /></svg
+            ><span>GitHub</span
+            ><svg class="icon small" aria-hidden="true">
+              <use href="#i-up-right" /></svg
+          ></a>
+        </nav>
+        <button
+          id="language-toggle"
+          class="language-button"
+          type="button"
+          aria-label="Switch to English"
+        >
+          <svg class="icon" aria-hidden="true"><use href="#i-globe" /></svg
+          ><span>EN</span>
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero container" aria-labelledby="hero-title">
+        <a
+          class="release-pill"
+          href="https://github.com/jstzwj/Muffin/releases/latest"
+          ><span class="status-dot"></span
+          ><span data-i18n="heroBadge"
+            >一款为专注写作而生的 Markdown 编辑器</span
+          ><svg class="icon small" aria-hidden="true">
+            <use href="#i-arrow-right" /></svg
+        ></a>
+        <h1 id="hero-title">
+          <span data-i18n="heroLine1">让灵感，</span
+          ><em data-i18n="heroLine2">自然成文。</em
+          ><svg
+            class="hero-swish"
+            viewBox="0 0 316 20"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M3 13C79 1 200 1 312 8M46 18c79-9 168-10 236-5"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+            />
+          </svg>
+        </h1>
+        <p class="hero-description" data-i18n="heroDescription">
+          原生、轻盈、所见即所得。让 Markdown 的简洁，<br
+            class="desktop-break"
+          />与纸张般自然的写作体验，在这里相遇。
+        </p>
+        <div class="hero-actions">
+          <a href="#download" class="button button-primary"
+            ><svg class="icon" aria-hidden="true">
+              <use href="#i-download" /></svg
+            ><span data-i18n="heroDownload">免费下载 Muffin</span></a
+          ><a
+            href="https://github.com/jstzwj/Muffin"
+            class="button button-quiet"
+            ><span data-i18n="heroSource">在 GitHub 上探索</span
+            ><svg class="icon" aria-hidden="true">
+              <use href="#i-up-right" /></svg
+          ></a>
+        </div>
+        <p class="hero-meta">
+          <span data-i18n="heroFree">免费开源</span
+          ><span class="meta-dot">·</span><span>Windows / macOS / Linux</span
+          ><span class="meta-dot">·</span><span>MIT</span>
+        </p>
+      </section>
+
+      <section
+        class="demo-section container"
+        aria-label="Markdown 交互预览"
+        data-label="demoSection"
+      >
+        <div class="demo-annotation">
+          <svg
+            width="41"
+            height="31"
+            viewBox="0 0 41 31"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M1 2c6 20 23 3 30 21m-9-2 10 5 4-12"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            /></svg
+          ><span data-i18n="demoAnnotation">写一点，看看灵感的样子</span>
+        </div>
+        <div class="editor-window" id="editor-window" data-theme="newsprint">
+          <div class="window-titlebar">
+            <div class="window-dots" aria-hidden="true">
+              <i></i><i></i><i></i>
+            </div>
+            <span class="window-title"
+              >Muffin <span class="title-separator">/</span>
+              <span data-i18n="demoFile">一点灵感.md</span></span
+            >
+            <select
+              id="mobile-sample"
+              class="mobile-sample"
+              aria-label="选择示例"
+              data-label="samples"
+            >
+              <option value="welcome" data-i18n="sampleWelcome">
+                一点灵感.md
+              </option>
+              <option value="notes" data-i18n="sampleNotes">项目笔记.md</option>
+              <option value="writing" data-i18n="sampleWriting">
+                写作清单.md
+              </option>
+            </select>
+            <span class="demo-label" data-i18n="demoLabel">交互预览</span>
+          </div>
+          <div class="editor-body">
+            <aside
+              class="editor-sidebar"
+              aria-label="示例文稿"
+              data-label="demoSidebar"
+            >
+              <div class="sidebar-heading">
+                <svg class="icon small" aria-hidden="true">
+                  <use href="#i-folder" /></svg
+                ><span data-i18n="sidebarTitle">我的文稿</span>
+              </div>
+              <div
+                class="sample-list"
+                role="group"
+                aria-label="选择示例"
+                data-label="samples"
+              >
+                <button
+                  class="sample-button is-active"
+                  data-sample="welcome"
+                  type="button"
+                  aria-pressed="true"
+                >
+                  <svg class="icon small" aria-hidden="true">
+                    <use href="#i-file" /></svg
+                  ><span data-i18n="sampleWelcome">一点灵感.md</span>
+                </button>
+                <button
+                  class="sample-button"
+                  data-sample="notes"
+                  type="button"
+                  aria-pressed="false"
+                >
+                  <svg class="icon small" aria-hidden="true">
+                    <use href="#i-file" /></svg
+                  ><span data-i18n="sampleNotes">项目笔记.md</span>
+                </button>
+                <button
+                  class="sample-button"
+                  data-sample="writing"
+                  type="button"
+                  aria-pressed="false"
+                >
+                  <svg class="icon small" aria-hidden="true">
+                    <use href="#i-file" /></svg
+                  ><span data-i18n="sampleWriting">写作清单.md</span>
+                </button>
+              </div>
+              <div class="outline-label" data-i18n="outline">文档大纲</div>
+              <div id="outline" class="outline-list"></div>
+              <div class="sidebar-bottom">
+                <span class="small-leaf" aria-hidden="true">✳</span
+                ><span data-i18n="sidebarFooter">给想法一点生长的空间</span>
+              </div>
+            </aside>
+            <div class="editor-main">
+              <div class="editor-toolbar">
+                <div
+                  class="view-switch"
+                  role="group"
+                  aria-label="预览模式"
+                  data-label="viewMode"
+                >
+                  <button
+                    type="button"
+                    id="preview-mode"
+                    class="is-active"
+                    aria-pressed="true"
+                  >
+                    <svg class="icon small" aria-hidden="true">
+                      <use href="#i-eye" /></svg
+                    ><span data-i18n="preview">预览</span></button
+                  ><button type="button" id="source-mode" aria-pressed="false">
+                    <svg class="icon small" aria-hidden="true">
+                      <use href="#i-code" /></svg
+                    ><span>Markdown</span>
+                  </button>
+                </div>
+                <div
+                  class="demo-themes"
+                  role="group"
+                  aria-label="预览主题"
+                  data-label="previewThemes"
+                >
+                  <button
+                    type="button"
+                    class="theme-dot newsprint is-active"
+                    data-theme="newsprint"
+                    aria-label="Newsprint"
+                    aria-pressed="true"
+                  ></button
+                  ><button
+                    type="button"
+                    class="theme-dot github"
+                    data-theme="github"
+                    aria-label="GitHub"
+                    aria-pressed="false"
+                  ></button
+                  ><button
+                    type="button"
+                    class="theme-dot night"
+                    data-theme="night"
+                    aria-label="Night"
+                    aria-pressed="false"
+                  ></button>
+                </div>
+              </div>
+              <div
+                class="document-area"
+                tabindex="0"
+                role="region"
+                aria-label="文档内容"
+                data-label="documentArea"
+              >
+                <article
+                  id="markdown-preview"
+                  class="markdown-body"
+                  aria-label="Markdown 预览"
+                  data-label="markdownPreview"
+                ></article>
+                <textarea
+                  id="markdown-source"
+                  class="markdown-source"
+                  aria-label="编辑 Markdown"
+                  data-label="markdownSource"
+                  spellcheck="false"
+                  maxlength="20000"
+                  hidden
+                ></textarea>
+              </div>
+              <div class="editor-status">
+                <span
+                  ><span class="status-dot"></span
+                  ><span id="theme-name">Newsprint</span></span
+                ><span
+                  ><span id="word-count">0</span>
+                  <span data-i18n="characters">字符</span
+                  ><span class="status-divider">|</span>Markdown</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="demo-caption">
+          <svg class="icon small" aria-hidden="true">
+            <use href="#i-sparkle" /></svg
+          ><span data-i18n="demoCaption"
+            >切换 Markdown
+            试写，或点击圆点更换配色。这是一份网页演示，完整编辑体验请下载桌面应用。</span
+          >
+        </p>
+      </section>
+
+      <section
+        class="principles container"
+        aria-label="产品特点"
+        data-label="principles"
+      >
+        <div>
+          <svg class="icon" aria-hidden="true"><use href="#i-feather" /></svg
+          ><span data-i18n="principleNative">C++ / Qt 原生构建</span>
+        </div>
+        <div>
+          <svg class="icon" aria-hidden="true"><use href="#i-eye" /></svg
+          ><span data-i18n="principleLive">真正的所见即所得</span>
+        </div>
+        <div>
+          <svg class="icon" aria-hidden="true"><use href="#i-file" /></svg
+          ><span data-i18n="principleFiles">你的文件，始终属于你</span>
+        </div>
+        <div>
+          <svg class="icon" aria-hidden="true"><use href="#i-globe" /></svg
+          ><span data-i18n="principleLanguages">15 种界面语言</span>
+        </div>
+      </section>
+
+      <section
+        id="features"
+        class="features-section container section-space"
+        aria-labelledby="features-title"
+      >
+        <div class="section-heading">
+          <span class="eyebrow" data-i18n="featureEyebrow"
+            >LESS FRICTION. MORE FLOW.</span
+          >
+          <h2 id="features-title" data-i18n="featureTitle">
+            写作本该如此简单。
+          </h2>
+          <p data-i18n="featureIntro">
+            从转瞬即逝的想法，到认真打磨的长文。<br />你负责表达，Muffin
+            照顾其余。
+          </p>
+        </div>
+        <div class="feature-lead">
+          <div class="feature-lead-copy">
+            <span class="feature-number"
+              >01 / <span data-i18n="liveLabel">自然书写</span></span
+            >
+            <h3 data-i18n="liveTitle">落笔，即所见。</h3>
+            <p data-i18n="liveDescription">
+              标题、列表、引用，在输入时自然成形。直接在渲染后的页面上编辑，随时切回源码，光标与思路都能接续。
+            </p>
+            <div class="feature-tags">
+              <span data-i18n="liveTag1">实时渲染</span
+              ><span data-i18n="liveTag2">源码同步</span
+              ><span data-i18n="liveTag3">专注模式</span>
+            </div>
+          </div>
+          <div class="syntax-illustration" aria-hidden="true">
+            <div class="syntax-source">
+              <span class="illustration-label">MARKDOWN</span>
+              <div>
+                <span class="syntax-muted">##</span>
+                <span data-i18n="illustrationHeading">把想法写下来</span>
+              </div>
+              <div>
+                <span class="syntax-muted">**</span
+                ><span data-i18n="illustrationBold">每个好故事</span
+                ><span class="syntax-muted">**</span>
+              </div>
+              <div>
+                <span data-i18n="illustrationText"
+                  >都从一个小小的想法开始。</span
+                >
+              </div>
+            </div>
+            <span class="syntax-arrow">→</span>
+            <div class="syntax-result">
+              <span class="illustration-label">MUFFIN</span>
+              <h4 data-i18n="illustrationHeading">把想法写下来</h4>
+              <p>
+                <strong data-i18n="illustrationBold">每个好故事</strong
+                ><br /><span data-i18n="illustrationText"
+                  >都从一个小小的想法开始。</span
+                >
+              </p>
+              <span class="illustration-cursor"></span>
+            </div>
+          </div>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-item">
+            <div class="feature-icon">
+              <svg class="icon" aria-hidden="true">
+                <use href="#i-feather" />
+              </svg>
+            </div>
+            <span class="feature-number"
+              >02 / <span data-i18n="nativeLabel">轻盈原生</span></span
+            >
+            <h3 data-i18n="nativeTitle">少一点负担，多一点流畅。</h3>
+            <p data-i18n="nativeDescription">
+              由 C++ 与 Qt 6
+              构建，结合视口懒加载和增量解析，为日常笔记与长篇文档提供轻盈的桌面体验。
+            </p>
+            <span class="feature-footnote" data-i18n="nativeFootnote"
+              >原生桌面应用 · 增量布局</span
+            >
+          </article>
+          <article class="feature-item">
+            <div class="feature-icon">
+              <svg class="icon" aria-hidden="true">
+                <use href="#i-diagram" />
+              </svg>
+            </div>
+            <span class="feature-number"
+              >03 / <span data-i18n="expressLabel">尽情表达</span></span
+            >
+            <h3 data-i18n="expressTitle">不止文字，想法有更多形状。</h3>
+            <p data-i18n="expressDescription">
+              可编辑表格、语法高亮代码块、LaTeX 数学公式与原生 Mermaid
+              图表，让技术文档也能清晰生动。
+            </p>
+            <span class="feature-footnote">Markdown + LaTeX + Mermaid</span>
+          </article>
+          <article class="feature-item">
+            <div class="feature-icon">
+              <svg class="icon" aria-hidden="true">
+                <use href="#i-export" />
+              </svg>
+            </div>
+            <span class="feature-number"
+              >04 / <span data-i18n="filesLabel">自由掌握</span></span
+            >
+            <h3 data-i18n="filesTitle">从本地出发，去任何地方。</h3>
+            <p data-i18n="filesDescription">
+              保存为普通 .md 文件，离线也能安心写作。原生导出
+              PDF、HTML、PNG，安装 Pandoc 后可扩展更多格式。
+            </p>
+            <span class="feature-footnote" data-i18n="filesFootnote"
+              >本地文件 · 开放格式 · MIT 开源</span
+            >
+          </article>
+        </div>
+      </section>
+
+      <section
+        id="themes"
+        class="themes-section section-space"
+        aria-labelledby="themes-title"
+      >
+        <div class="container themes-layout">
+          <div class="theme-copy">
+            <span class="eyebrow" data-i18n="themeEyebrow"
+              >A SPACE THAT FEELS LIKE YOU.</span
+            >
+            <h2 id="themes-title" data-i18n="themeTitle">
+              你的文字，<br />你的氛围。
+            </h2>
+            <p data-i18n="themeDescription">
+              清晨的柔和纸色，深夜的安静暗色。五款内置主题，让文档与界面一起，融入你的写作时刻。
+            </p>
+            <div
+              class="theme-picker"
+              role="group"
+              aria-label="选择主题"
+              data-label="chooseTheme"
+            >
+              <button
+                type="button"
+                data-showcase-theme="newsprint"
+                class="is-active"
+                aria-pressed="true"
+              >
+                <span class="theme-dot newsprint"></span>Newsprint</button
+              ><button
+                type="button"
+                data-showcase-theme="github"
+                aria-pressed="false"
+              >
+                <span class="theme-dot github"></span>GitHub</button
+              ><button
+                type="button"
+                data-showcase-theme="night"
+                aria-pressed="false"
+              >
+                <span class="theme-dot night"></span>Night</button
+              ><button
+                type="button"
+                data-showcase-theme="pixyll"
+                aria-pressed="false"
+              >
+                <span class="theme-dot pixyll"></span>Pixyll</button
+              ><button
+                type="button"
+                data-showcase-theme="whitey"
+                aria-pressed="false"
+              >
+                <span class="theme-dot whitey"></span>Whitey
+              </button>
+            </div>
+            <p class="theme-note" data-i18n="themeNote">
+              还可以用 CSS 编写属于你的主题。下方为网页配色示意。
+            </p>
+          </div>
+          <div class="theme-paper" id="theme-paper" data-theme="newsprint">
+            <div class="paper-top">
+              <span class="paper-line"></span
+              ><span id="showcase-theme-name">NEWSPRINT</span
+              ><span class="paper-line"></span>
+            </div>
+            <span class="paper-date" data-i18n="paperDate">写给每一个开始</span>
+            <h3 data-i18n="paperTitle">把日常，写成诗。</h3>
+            <p data-i18n="paperText">
+              一杯咖啡，一扇窗，一点不着边际的念头。<br />留一页空白，让今天的故事慢慢发生。
+            </p>
+            <blockquote data-i18n="paperQuote">
+              不必等到想清楚，<br />写下来，就是一个好的开始。
+            </blockquote>
+            <div class="paper-end">✳</div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="details-section container section-space"
+        aria-labelledby="details-title"
+      >
+        <div class="section-heading">
+          <span class="eyebrow" data-i18n="detailsEyebrow"
+            >LITTLE THINGS. THOUGHTFULLY MADE.</span
+          >
+          <h2 id="details-title" data-i18n="detailsTitle">
+            那些让你安心写下去的小事。
+          </h2>
+        </div>
+        <div class="details-grid">
+          <div>
+            <svg class="icon" aria-hidden="true"><use href="#i-focus" /></svg>
+            <h3 data-i18n="detailFocus">留在心流里</h3>
+            <p data-i18n="detailFocusText">
+              专注模式与打字机模式，让当前这一句，成为目光的落点。
+            </p>
+          </div>
+          <div>
+            <svg class="icon" aria-hidden="true"><use href="#i-folder" /></svg>
+            <h3 data-i18n="detailOrganize">想找的，就在手边</h3>
+            <p data-i18n="detailOrganizeText">
+              文件树、文档大纲与快速打开，让散落的想法各就各位。
+            </p>
+          </div>
+          <div>
+            <svg class="icon" aria-hidden="true"><use href="#i-restore" /></svg>
+            <h3 data-i18n="detailRestore">继续上一次的灵感</h3>
+            <p data-i18n="detailRestoreText">
+              会话恢复、草稿恢复与可选自动保存，照顾每一次投入。
+            </p>
+          </div>
+          <div>
+            <svg class="icon" aria-hidden="true"><use href="#i-check" /></svg>
+            <h3 data-i18n="detailSpell">斟酌每一个词</h3>
+            <p data-i18n="detailSpellText">
+              内置拼写检查与多语言词典，让表达多一分从容。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="download"
+        class="download-section container"
+        aria-labelledby="download-title"
+      >
+        <div class="download-top">
+          <div>
+            <span class="eyebrow" data-i18n="downloadEyebrow"
+              >YOUR NEXT PAGE STARTS HERE.</span
+            >
+            <h2 id="download-title" data-i18n="downloadTitle">
+              下一页，从这里开始。
+            </h2>
+            <p data-i18n="downloadIntro">
+              免费、开源，随时开始。为你的桌面，留一处安静的写作空间。
+            </p>
+          </div>
+          <img
+            src="/muffin.svg"
+            width="120"
+            height="120"
+            alt=""
+            loading="lazy"
+          />
+        </div>
+        <div class="download-grid">
+          <article class="download-card">
+            <svg class="platform-icon" aria-hidden="true">
+              <use href="#i-windows" />
+            </svg>
+            <h3>Windows</h3>
+            <p data-i18n="windowsSubtitle">安装包与便携版</p>
+            <a
+              class="button button-platform"
+              id="download-windows"
+              href="https://github.com/jstzwj/Muffin/releases/latest"
+              ><span data-i18n="downloadWindows">下载 Windows 版</span
+              ><svg class="icon small" aria-hidden="true">
+                <use href="#i-download" /></svg
+            ></a>
+            <div
+              class="download-formats architecture-picker"
+              role="group"
+              aria-label="Windows 架构"
+              data-label="architecture"
+            >
+              <button
+                type="button"
+                data-architecture="x64"
+                class="is-active"
+                aria-pressed="true"
+              >
+                x64</button
+              ><span>/</span
+              ><button
+                type="button"
+                data-architecture="arm64"
+                aria-pressed="false"
+              >
+                ARM64
+              </button>
+            </div>
+          </article>
+          <article class="download-card">
+            <svg class="platform-icon" aria-hidden="true">
+              <use href="#i-apple" />
+            </svg>
+            <h3>macOS</h3>
+            <p>Apple Silicon</p>
+            <a
+              class="button button-platform"
+              id="download-macos"
+              href="https://github.com/jstzwj/Muffin/releases/latest"
+              ><span data-i18n="downloadMac">下载 macOS 版</span
+              ><svg class="icon small" aria-hidden="true">
+                <use href="#i-download" /></svg></a
+            ><span class="download-formats">DMG / ARM64</span>
+          </article>
+          <article class="download-card">
+            <svg class="platform-icon" aria-hidden="true">
+              <use href="#i-terminal" />
+            </svg>
+            <h3>Linux</h3>
+            <p data-i18n="linuxSubtitle">为你的 Linux 桌面</p>
+            <a
+              class="button button-platform"
+              id="download-linux"
+              href="https://github.com/jstzwj/Muffin/releases/latest"
+              ><span data-i18n="downloadLinux">下载 Linux 版</span
+              ><svg class="icon small" aria-hidden="true">
+                <use href="#i-download" /></svg></a
+            ><span class="download-formats">tar.gz / x64</span>
+          </article>
+        </div>
+        <div class="download-bottom">
+          <a href="https://github.com/jstzwj/Muffin/releases/latest"
+            ><span id="release-version" data-i18n="viewReleases"
+              >查看发行版</span
+            ><svg class="icon small" aria-hidden="true">
+              <use href="#i-up-right" /></svg></a
+          ><a
+            href="https://github.com/jstzwj/Muffin/releases"
+            data-i18n="allDownloads"
+            >全部版本、其他架构与更新日志</a
+          >
+        </div>
+      </section>
+
+      <section class="open-source container">
+        <svg class="icon" aria-hidden="true"><use href="#i-github" /></svg>
+        <p data-i18n="openSourceText">
+          为热爱写作的人而做，也与热爱创造的人一起成长。
+        </p>
+        <a href="https://github.com/jstzwj/Muffin" data-i18n="openSourceLink"
+          >在 GitHub 上参与 Muffin ↗</a
+        >
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-row">
+        <a class="brand footer-brand" href="#"
+          ><img src="/muffin.svg" width="30" height="30" alt="" /><span
+            >Muffin<span class="brand-dot">.</span></span
+          ></a
+        >
+        <p data-i18n="footerTagline">给文字一点空间。</p>
+        <div class="footer-links">
+          <a
+            href="https://github.com/jstzwj/Muffin/blob/main/LICENSE"
+            data-i18n="license"
+            >MIT 许可</a
+          ><a
+            href="https://github.com/jstzwj/Muffin/issues"
+            data-i18n="feedback"
+            >反馈与建议</a
+          ><a href="https://github.com/jstzwj/Muffin">GitHub ↗</a>
+        </div>
+      </div>
+    </footer>
+
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="icon-sprite"
+      aria-hidden="true"
+    >
+      <defs>
+        <symbol id="i-arrow-right" viewBox="0 0 24 24">
+          <path d="M4 12h15m-6-6 6 6-6 6" />
+        </symbol>
+        <symbol id="i-up-right" viewBox="0 0 24 24">
+          <path d="M6 18 18 6M6 6h12v12" />
+        </symbol>
+        <symbol id="i-download" viewBox="0 0 24 24">
+          <path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5" />
+        </symbol>
+        <symbol id="i-globe" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M3 12h18M12 3c5 5 5 13 0 18-5-5-5-13 0-18Z" />
+        </symbol>
+        <symbol id="i-eye" viewBox="0 0 24 24">
+          <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z" />
+          <circle cx="12" cy="12" r="3" />
+        </symbol>
+        <symbol id="i-code" viewBox="0 0 24 24">
+          <path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18" />
+        </symbol>
+        <symbol id="i-file" viewBox="0 0 24 24">
+          <path d="M14 2H5v20h14V7l-5-5Zm0 0v6h5M8 12h8m-8 4h6" />
+        </symbol>
+        <symbol id="i-folder" viewBox="0 0 24 24">
+          <path d="M3 6h7l2 3h9v11H3V6Zm0 0V4h7l2 2h8v3" />
+        </symbol>
+        <symbol id="i-feather" viewBox="0 0 24 24">
+          <path
+            d="M20 3C9 1 3 8 7 17c9 3 16-4 13-14ZM3 21 16 8M7 17l7-1M11 13V7"
+          />
+        </symbol>
+        <symbol id="i-diagram" viewBox="0 0 24 24">
+          <rect x="8" y="2" width="8" height="5" rx="1" />
+          <rect x="2" y="17" width="7" height="5" rx="1" />
+          <rect x="15" y="17" width="7" height="5" rx="1" />
+          <path d="M12 7v5m-7 5v-5h14v5" />
+        </symbol>
+        <symbol id="i-export" viewBox="0 0 24 24">
+          <path d="M14 3h7v7m0-7L10 14M10 3H3v18h18v-7" />
+        </symbol>
+        <symbol id="i-focus" viewBox="0 0 24 24">
+          <path d="M3 8V3h5m8 0h5v5m0 8v5h-5M8 21H3v-5M7 12h10" />
+        </symbol>
+        <symbol id="i-restore" viewBox="0 0 24 24">
+          <path d="M3 10a9 9 0 1 1 2 8M3 4v6h6m3-3v6l4 2" />
+        </symbol>
+        <symbol id="i-check" viewBox="0 0 24 24">
+          <path d="m8 12 3 3 5-6" />
+          <rect x="3" y="3" width="18" height="18" rx="4" />
+        </symbol>
+        <symbol id="i-sparkle" viewBox="0 0 24 24">
+          <path d="m12 3 3 6 6 3-6 3-3 6-3-6-6-3 6-3 3-6Z" />
+        </symbol>
+        <symbol id="i-terminal" viewBox="0 0 24 24">
+          <rect x="2" y="4" width="20" height="16" rx="2" />
+          <path d="m6 8 4 4-4 4m7 0h5" />
+        </symbol>
+        <symbol id="i-windows" viewBox="0 0 24 24">
+          <path
+            d="m3 5 8-1v7H3V5Zm10-1 8-1v8h-8V4ZM3 13h8v7l-8-1v-6Zm10 0h8v8l-8-1v-7Z"
+          />
+        </symbol>
+        <symbol id="i-apple" viewBox="0 0 24 24">
+          <path
+            d="M16 3c-1 0-3 1-3 3 2 0 3-1 3-3ZM17 12c0-2 2-3 2-3-1-2-3-3-5-2-1 1-2 1-3 0-3-1-6 1-6 5 0 4 3 9 5 9 1 0 2-1 3-1s2 1 3 1c2 0 4-4 4-5-1 0-3-1-3-4Z"
+          />
+        </symbol>
+        <symbol id="i-github" viewBox="0 0 24 24">
+          <path
+            d="M9 19c-4 1-4-2-6-2m12 5v-4c0-1-.3-1.7-1-2 3-.4 6-1.5 6-6a5 5 0 0 0-1.3-3.5 4.7 4.7 0 0 0-.1-3.5S17.5 2.6 15 4a12 12 0 0 0-6 0C6.5 2.6 5.4 3 5.4 3a4.7 4.7 0 0 0-.1 3.5A5 5 0 0 0 4 10c0 4.5 3 5.6 6 6-.7.3-1 1-1 2v4"
+          />
+        </symbol>
+      </defs>
+    </svg>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
